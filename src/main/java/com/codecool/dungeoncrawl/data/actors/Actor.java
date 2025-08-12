@@ -43,6 +43,8 @@ public abstract class Actor implements Drawable, MapLoadable {
         return maxHealth;
     }
 
+    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
+
     public Cell getCell() {
         return cell;
     }

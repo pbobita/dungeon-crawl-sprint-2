@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.items.ChainMail;
 import com.codecool.dungeoncrawl.data.items.Key;
 import com.codecool.dungeoncrawl.data.items.Potion;
 import com.codecool.dungeoncrawl.data.items.Sword;
@@ -47,13 +48,15 @@ public class MapLoader {
                             cell.setType(cellType);
                             break;
                         case KEY:
-                            new Key(cell);
+                            new Key(cell, 'k');
                             break;
                         case SWORD:
-                            new Sword(cell);
+                            new Sword(cell, 'w');
                             break;
+                        case CHAIN_MAIL:
+                            new ChainMail(cell, 'a');
                         case POTION:
-                            new Potion(cell);
+                            new Potion(cell, 't');
                             break;
                         case SKELETON:
                             new Skeleton(cell);

@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
@@ -27,7 +28,9 @@ public class Game extends Application {
         PlayerDao playerDAO = new PlayerDao(jdbcdao);
         MovementService movementService = new MovementService();
         ItemService itemService = new ItemService();
-        GameLogic logic = new GameLogic(playerDAO, movementService, itemService);
+        ItemDao itemDAO = new ItemDao(jdbcdao);
+        ItemDao.init(itemDAO);
+        GameLogic logic = new GameLogic(playerDAO, movementService, itemService, itemDAO);
         this.logic = logic;
         this.ui = new UI(logic);
 

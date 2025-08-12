@@ -1,20 +1,26 @@
 package com.codecool.dungeoncrawl.data.items;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class Sword extends Item {
-    private final int attackBoost = 3;
-
-    public Sword(Cell cell) {
-        super(cell);
-    }
-
-    public int getAttackBoost() {
-        return attackBoost;
+    public Sword(Cell cell, char symbol) {
+        super(cell, symbol);
     }
 
     @Override
     public String getTileName() {
         return "sword";
+    }
+
+    @Override
+    public void onPickUp(Player player, Cell cell) {
+        Integer boost = ItemDao.getIntStat("sword", "attackPowerIncrease");
+        player.boostAttackPower(boost);
+        player.setInventory(player.getInventory() + " Sword");
+        setEquipped(true);
+        cell.setItem(null);
     }
 }

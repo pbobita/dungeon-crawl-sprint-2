@@ -19,7 +19,8 @@ public enum CellType {
     SPIDER("spider", 'p'),
     CULTIST("cultist", 'c'),
     PLAYER("player", '@'),
-    LOAD_TILE("loadTile", '*');
+    LOAD_TILE("loadTile", '*'),
+    CHAIN_MAIL("chainMail", '-');
 
     private final String tileName;
     private final char symbol;

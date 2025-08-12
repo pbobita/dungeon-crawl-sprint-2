@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
@@ -19,10 +20,12 @@ public class GameLogic {
     private final PlayerDao playerDAO;
     private final MovementService movementService;
     private final ItemService itemService;
+    private final ItemDao itemDAO;
 
-    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService) {
+    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO) {
         this.movementService = movementService;
         this.itemService = itemService;
+        this.itemDAO = itemDAO;
         this.map = MapLoader.loadMap(false);
         this.playerDAO = playerDAO;
     }
@@ -84,7 +87,7 @@ public class GameLogic {
 
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
-            handleItemPickup(map.getPlayer(), cell);
+            cell.getItem().onPickUp(map.getPlayer(), cell);
         } else if (cell.getType().equals(CellType.SAVE_TILE)) {
             playerDAO.savePlayer(map.getPlayer());
         }
