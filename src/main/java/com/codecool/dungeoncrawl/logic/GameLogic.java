@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
@@ -14,8 +15,10 @@ import java.util.Set;
 public class GameLogic {
     private GameMap map;
     private final PlayerDao playerDAO;
+    private final ItemDao itemDAO;
 
-    public GameLogic(PlayerDao playerDAO) {
+    public GameLogic(PlayerDao playerDAO, ItemDao itemDAO) {
+        this.itemDAO = itemDAO;
         this.map = MapLoader.loadMap(false);
         this.playerDAO = playerDAO;
     }
@@ -67,50 +70,17 @@ public class GameLogic {
         playerDAO.loadPlayer().ifPresent(loadedMap -> this.map = loadedMap);
     }
 
-    private void handleItemPickup(Player player, Cell cell) {
-        switch (cell.getItem().getTileName()) {
-            case "potion" -> consumePotion(player, cell);
-            case "sword" -> pickUpSword(player, cell);
-            case "key" -> pickUpKey(player, cell);
-        }
-    }
-
-    private int calculatePotionHeal(Player player, Cell cell) {
-        int currentHealth = player.getHealth();
-        int maxHealth = player.getMaxHealth();
-        Potion potion = new Potion(cell);
-
-        int healedHealth = currentHealth + potion.getHealValue();
-        return Math.min(healedHealth, maxHealth);
-    }
-
-    private void consumePotion(Player player, Cell cell) {
-        player.setHealth(calculatePotionHeal(player, cell));
-        cell.setItem(null);
-    }
-
-    private void pickUpSword(Player player, Cell cell) {
-        Sword sword = (Sword) cell.getItem();
-        player.boostAttackPower(sword.getAttackBoost());
-        cell.setItem(null);
-    }
-
-    private void pickUpKey(Player player, Cell cell) {
-        player.setInventory(player.getInventory() + cell.getItem().getTileName());
-        cell.setItem(null);
-    }
-
     private boolean canMoveTo(String tile, Actor actor, Player player) {
         return (actor == null
                     && !player.isDead()
                     && !Set.of("wall", "door", "empty").contains(tile))
-                    || (tile.equals("door") && player.getInventory().contains("key")
+                    || (tile.equals("door") && player.getInventory().contains("Key")
         );
     }
 
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
-            handleItemPickup(map.getPlayer(), cell);
+            cell.getItem().onPickUp(map.getPlayer(), cell);
         } else if (cell.getTileName().equals("saveTile")) {
             playerDAO.savePlayer(map.getPlayer());
         }

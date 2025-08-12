@@ -53,6 +53,8 @@ public abstract class Actor implements Drawable {
         return maxHealth;
     }
 
+    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
+
     public String getInventory() {return inventory; }
 
     public void setInventory(String inventory) {

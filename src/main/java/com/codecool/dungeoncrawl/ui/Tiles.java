@@ -39,6 +39,7 @@ public class Tiles {
         tileMap.put("cultist", new Tile(24, 2));
         tileMap.put("saveTile", new Tile(0,10));
         tileMap.put("loadTile", new Tile(24, 24));
+        tileMap.put("chainMail", new Tile(1, 23));
 
     }
 

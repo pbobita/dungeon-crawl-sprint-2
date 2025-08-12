@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
@@ -23,7 +24,8 @@ class GameLogicTest {
         defenderCell = mock(Cell.class);
         JdbcDao jdbcdao = new JdbcDao();
         PlayerDao playerDAO = new PlayerDao(jdbcdao);
-        logic = new GameLogic(playerDAO);
+        ItemDao itemDAO = new ItemDao(jdbcdao);
+        logic = new GameLogic(playerDAO, itemDAO);
 
         when(attacker.getCell()).thenReturn(attackerCell);
         when(defender.getCell()).thenReturn(defenderCell);

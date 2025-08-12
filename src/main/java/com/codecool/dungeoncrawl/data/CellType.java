@@ -12,7 +12,8 @@ public enum CellType {
     NEXTFLOOR("nextFloor"),
     SAVE_TILE("saveTile"),
     LOAD_TILE("loadTile"),
-    MONSTER("monster"),;
+    MONSTER("monster"),
+    CHAIN_MAIL("chainMail"),;
 
     private final String tileName;
 

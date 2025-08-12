@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.ui.UI;
@@ -23,7 +24,9 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
         JdbcDao jdbcdao = new JdbcDao();
         PlayerDao playerDAO = new PlayerDao(jdbcdao);
-        GameLogic logic = new GameLogic(playerDAO);
+        ItemDao itemDAO = new ItemDao(jdbcdao);
+        ItemDao.init(itemDAO);
+        GameLogic logic = new GameLogic(playerDAO, itemDAO);
         this.logic = logic;
         this.ui = new UI(logic);
 

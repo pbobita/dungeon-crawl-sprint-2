@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class UI {
@@ -70,7 +71,7 @@ public class UI {
         mainStage.setHealthLabelText(logic.getPlayerHealth());
         mainStage.setMaxHealthLabelText(logic.getPlayerMaxHealth());
         mainStage.setAttackPowerLabelText(logic.getPlayerDamage());
-        mainStage.setInventoryLabelText(logic.getPlayerInventory());
+        mainStage.setInventoryLabelText(Collections.singletonList(logic.getPlayerInventory()));
     }
 
     public void loadPlayerAndRefresh() {
