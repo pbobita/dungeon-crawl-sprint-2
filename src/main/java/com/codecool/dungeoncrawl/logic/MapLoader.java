@@ -87,6 +87,10 @@ public class MapLoader {
                         case '*':
                             cell.setType(CellType.LOAD_TILE);
                             break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            new Crab(cell);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

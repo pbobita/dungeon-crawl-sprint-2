@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
+
 public class MainStage {
     private final Canvas canvas;
     private final Scene scene;
@@ -24,9 +26,14 @@ public class MainStage {
     private Scene setUpScene() {
         BorderPane borderPane = statusPane.build();
         borderPane.setCenter(canvas);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        double width = screenSize.getWidth();
+
+        double height = screenSize.getHeight();
 
         root = new StackPane(borderPane);
-        root.setPrefSize(800, 600);
+        root.setPrefSize(width, height);
 
         inputHandler = new InputHandler("Please enter your name:");
         StackPane.setAlignment(inputHandler, Pos.CENTER);
