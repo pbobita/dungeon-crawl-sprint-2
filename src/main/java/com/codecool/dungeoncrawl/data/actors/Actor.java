@@ -4,10 +4,10 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.logic.MapLoadable;
 
-public abstract class Actor implements Drawable {
+public abstract class Actor implements Drawable, MapLoadable {
     private Cell cell;
-    private String inventory = "";
     private int health;
     private int maxHealth;
     private int attackPower;
@@ -20,25 +20,15 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if(nextCell == null || nextCell.getActor() != null || nextCell.getType() == CellType.WALL) {
-            return;
-        }
-
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
+    @Override
+    public boolean matches(char symbol) {
+        return symbol == getSymbol();
     }
 
-    public void adminMove(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if(nextCell == null || nextCell.getActor() != null) {
-            return;
-        }
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
+    @Override
+    public void placeOn(Cell cell, GameMap map, boolean skipPlayerSpawn) {
+        cell.setType(CellType.FLOOR);
+        cell.setActor(this);
     }
 
     public int getHealth() {
@@ -53,14 +43,12 @@ public abstract class Actor implements Drawable {
         return maxHealth;
     }
 
-    public String getInventory() {return inventory; }
-
-    public void setInventory(String inventory) {
-        this.inventory = inventory;
-    }
-
     public Cell getCell() {
         return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public int getX() {

@@ -8,6 +8,11 @@ public class Skeleton extends Monster {
     }
 
     @Override
+    public char getSymbol() {
+        return 's';
+    }
+
+    @Override
     public String getTileName() {
         return "skeleton";
     }
