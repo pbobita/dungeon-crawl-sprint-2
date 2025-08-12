@@ -20,7 +20,7 @@ public enum CellType {
     CULTIST("cultist", 'c'),
     PLAYER("player", '@'),
     LOAD_TILE("loadTile", '*'),
-    CHAIN_MAIL("chainMail", '-');
+    CHAIN_MAIL("chainMail", 'a');
 
     private final String tileName;
     private final char symbol;

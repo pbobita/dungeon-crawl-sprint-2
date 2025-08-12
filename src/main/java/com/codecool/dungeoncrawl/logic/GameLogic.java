@@ -77,14 +77,6 @@ public class GameLogic {
         playerDAO.loadPlayer().ifPresent(loadedMap -> this.map = loadedMap);
     }
 
-    private void handleItemPickup(Player player, Cell cell) {
-        switch (cell.getItem().getTileName()) {
-            case "potion" -> itemService.consumePotion(player, cell);
-            case "sword" -> itemService.pickUpSword(player, cell);
-            case "key" -> itemService.pickUpKey(player, cell);
-        }
-    }
-
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
             cell.getItem().onPickUp(map.getPlayer(), cell);

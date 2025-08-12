@@ -29,7 +29,7 @@ public class MovementService {
         return (actor == null
                 && !player.isDead()
                 && !Set.of("wall", "door", "empty").contains(tile))
-                || (tile.equals("door") && player.getInventory().contains("key")
+                || (tile.equals("door") && player.getInventory().contains("Key")
         );
     }
 }
