@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 
 public class Cat extends NPC{
-    Player player;
     boolean isFollowing = false;
 
     public Cat(Cell cell) {
