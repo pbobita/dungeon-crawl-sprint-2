@@ -17,7 +17,7 @@ public class Key extends Item {
 
     @Override
     public void onPickUp(Player player, Cell cell) {
-        player.setInventory(player.getInventory() + " Key");
+        player.getInventory().add(this);
         cell.setItem(null);
     }
 }

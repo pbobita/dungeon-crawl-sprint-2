@@ -19,7 +19,7 @@ public class Sword extends Item {
     public void onPickUp(Player player, Cell cell) {
         Integer boost = ItemDao.getIntStat("sword", "attackPowerIncrease");
         player.boostAttackPower(boost);
-        player.setInventory(player.getInventory() + " Sword");
+        player.getInventory().add(this);
         setEquipped(true);
         cell.setItem(null);
     }

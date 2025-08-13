@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class InputHandler extends VBox {
     private final TextField input;
-    Button submitButton;
+    private final Button submitButton;
 
     public InputHandler(String labelText) {
         input = new TextField();
@@ -32,20 +32,11 @@ public class InputHandler extends VBox {
         this.setMaxHeight(150);
     }
 
-    public void handleSubmit(Consumer<String> onSubmit) {
-        submitButton.setOnAction(event -> submitText(onSubmit));
-        input.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                submitText(onSubmit);
-            }
-        });
+    public Button getSubmitButton() {
+        return submitButton;
     }
 
-    private void submitText(Consumer<String> onSubmit) {
-        String text = input.getText();
-        if (!text.isEmpty()) {
-            onSubmit.accept(text);
-            input.clear();
-        }
+    public TextField getInput() {
+        return input;
     }
 }

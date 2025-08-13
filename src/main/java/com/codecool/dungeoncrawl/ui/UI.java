@@ -29,7 +29,9 @@ public class UI {
                 logic.getMapHeight() * Tiles.TILE_WIDTH);
         this.logic = logic;
         this.context = canvas.getGraphicsContext2D();
-        this.mainStage = new MainStage(canvas);
+        this.mainStage = new MainStage(canvas, logic, this, logic.getMap().getPlayer());
+
+        logic.setMainStage(mainStage);
     }
 
     public void setUpPain(Stage primaryStage) {
@@ -68,6 +70,7 @@ public class UI {
                 }
             }
         }
+        mainStage.setNameValueLabel(logic.getPlayerName());
         mainStage.setHealthLabelText(logic.getPlayerHealth());
         mainStage.setMaxHealthLabelText(logic.getPlayerMaxHealth());
         mainStage.setAttackPowerLabelText(logic.getPlayerDamage());
