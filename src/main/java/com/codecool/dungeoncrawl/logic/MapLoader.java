@@ -16,8 +16,10 @@ import java.util.Scanner;
 public class MapLoader {
 
     public static GameMap loadMap(boolean skipPlayerSpawn) {
+
         InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
         Scanner scanner = new Scanner(is);
+
         int width = scanner.nextInt();
         int height = scanner.nextInt();
 

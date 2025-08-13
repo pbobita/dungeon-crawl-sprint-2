@@ -10,6 +10,7 @@ import com.codecool.dungeoncrawl.data.actors.Monster;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.items.Potion;
 import com.codecool.dungeoncrawl.data.items.Sword;
+import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
 
@@ -18,6 +19,10 @@ import java.util.Set;
 public class GameLogic {
     private GameMap map;
     private final PlayerDao playerDAO;
+    private MainStage mainStage;
+
+    public GameLogic(PlayerDao playerDAO) {
+
     private final MovementService movementService;
     private final ItemService itemService;
     private final ItemDao itemDAO;
@@ -28,6 +33,10 @@ public class GameLogic {
         this.itemDAO = itemDAO;
         this.map = MapLoader.loadMap(false);
         this.playerDAO = playerDAO;
+    }
+
+    public void setMainStage(MainStage mainStage) {
+        this.mainStage = mainStage;
     }
 
     public double getMapWidth() {
@@ -56,6 +65,10 @@ public class GameLogic {
 
     public String getPlayerInventory() {return map.getPlayer().getInventory();}
 
+    public String getPlayerName() {
+        return map.getPlayer().getName();
+    }
+
 
     public GameMap getMap() {
         return map;
@@ -65,11 +78,19 @@ public class GameLogic {
         defender.gainDamage(attacker.getAttackPower());
         if (defender.isDead()) {
             defender.getCell().setActor(null);
+            handleGameEnding();
         } else {
             attacker.gainDamage(defender.getAttackPower());
             if (attacker.isDead()) {
                 attacker.getCell().setActor(null);
+                handleGameEnding();
             }
+        }
+    }
+
+    public void handleGameEnding() {
+        if(map.getPlayer().isDead()) {
+            mainStage.handleGameOverScreen();
         }
     }
 

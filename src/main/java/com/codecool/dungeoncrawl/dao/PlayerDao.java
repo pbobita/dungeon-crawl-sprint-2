@@ -15,16 +15,17 @@ public class PlayerDao {
 
     public void savePlayer(Player player) {
         String deleteSql = "DELETE FROM game";
-        String insertSql = "INSERT INTO game (map, player_x, player_y, health, attack_power, inventory) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO game (map, name, player_x, player_y, health, attack_power, inventory) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         jdbcDao.executeUpdate(deleteSql, stmt -> {});
         jdbcDao.executeUpdate(insertSql, stmt -> {
             stmt.setString(1, "default map");
-            stmt.setInt(2, player.getX());
-            stmt.setInt(3, player.getY());
-            stmt.setInt(4, player.getHealth());
-            stmt.setInt(5, player.getAttackPower());
-            stmt.setString(6, player.getInventory());
+            stmt.setString(2, player.getName());
+            stmt.setInt(3, player.getX());
+            stmt.setInt(4, player.getY());
+            stmt.setInt(5, player.getHealth());
+            stmt.setInt(6, player.getAttackPower());
+            stmt.setString(7, player.getInventory());
         });
     }
 
@@ -46,12 +47,15 @@ public class PlayerDao {
     private void createPlayerFromResultSet(GameMap map, java.sql.ResultSet rs) throws java.sql.SQLException {
         int x = rs.getInt("player_x");
         int y = rs.getInt("player_y");
+        String name = rs.getString("name");
         int health = rs.getInt("health");
         int attackPower = rs.getInt("attack_power");
         String inventory = rs.getString("inventory");
 
         Player player = new Player(map.getCell(x, y));
+
         player.setHealth(health);
+        player.setName(name);
         player.setAttackPower(attackPower);
         player.setInventoryFromString(inventory);
 
