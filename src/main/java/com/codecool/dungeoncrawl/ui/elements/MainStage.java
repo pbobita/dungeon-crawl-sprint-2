@@ -13,6 +13,8 @@ import javafx.scene.layout.StackPane;
 
 import java.util.List;
 
+import java.awt.*;
+
 public class MainStage {
     private final Canvas canvas;
     private final Scene scene;
@@ -36,9 +38,14 @@ public class MainStage {
     private Scene setUpScene() {
         BorderPane borderPane = statusPane.build();
         borderPane.setCenter(canvas);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        double width = screenSize.getWidth();
+
+        double height = screenSize.getHeight();
 
         root = new StackPane(borderPane);
-        root.setPrefSize(800, 600);
+        root.setPrefSize(width, height);
 
         createStartScreen();
         handleStartNewGame();

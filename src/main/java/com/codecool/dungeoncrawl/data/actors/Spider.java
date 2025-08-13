@@ -11,6 +11,7 @@ public class Spider extends Monster {
         return 'p';
     }
 
+
     @Override
     public String getTileName() {
         return "spider";

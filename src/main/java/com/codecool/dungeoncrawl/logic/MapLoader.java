@@ -77,6 +77,9 @@ public class MapLoader {
                                 map.setPlayer(new Player(cell));
                             }
                             break;
+                        case CRAB:
+                            new Crab(cell);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
