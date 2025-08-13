@@ -18,7 +18,7 @@ public class Inventory {
     }
 
     public List<Item> getItems() {
-        return new ArrayList<>(items); // védett másolat
+        return new ArrayList<>(items);
     }
 
     public String toSaveString() {

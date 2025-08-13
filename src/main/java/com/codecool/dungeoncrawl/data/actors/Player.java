@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.*;
-import com.codecool.dungeoncrawl.data.items.Item;
 
 public class Player extends Actor {
     private final Inventory inventory;
@@ -30,22 +29,6 @@ public class Player extends Actor {
 
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public void addItemToInventory(Item item) {
-        inventory.add(item);
-    }
-
-    public boolean hasItem(String itemName) {
-        return inventory.contains(itemName);
-    }
-
-    public String getInventoryAsString() {
-        return inventory.toSaveString();
-    }
-
-    public void loadInventoryFromString(String data, ItemFactory factory) {
-        inventory.fromSaveString(data, factory);
     }
 
     @Override
