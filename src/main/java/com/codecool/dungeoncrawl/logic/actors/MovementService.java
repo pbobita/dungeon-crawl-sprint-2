@@ -27,9 +27,9 @@ public class MovementService {
 
     public boolean canMoveTo(Player player, String tile, Actor actor) {
         return (actor == null
-                && !player.isDead()
-                && !Set.of("wall", "door", "empty").contains(tile))
-                || (tile.equals("door") && player.getInventory().contains("Key")
+                    && !player.isDead()
+                    && !Set.of("wall", "door", "empty").contains(tile))
+                    || (tile.equals("door") && player.getInventory().contains("Key")
         );
     }
 }

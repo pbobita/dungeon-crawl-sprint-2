@@ -50,11 +50,17 @@ public class GameLogic {
         return Integer.toString(map.getPlayer().getHealth());
     }
 
-    public String getPlayerMaxHealth() { return Integer.toString(map.getPlayer().getMaxHealth()); }
+    public String getPlayerMaxHealth() {
+        return Integer.toString(map.getPlayer().getMaxHealth());
+    }
 
-    public String getPlayerDamage() { return Integer.toString(map.getPlayer().getAttackPower()); }
+    public String getPlayerDamage() {
+        return Integer.toString(map.getPlayer().getAttackPower());
+    }
 
-    public String getPlayerInventory() {return map.getPlayer().getInventory();}
+    public String getPlayerInventory() {
+        return map.getPlayer().getInventory();
+    }
 
 
     public GameMap getMap() {
@@ -91,13 +97,12 @@ public class GameLogic {
 
         if (movementService.canMoveTo(player, targetCell.getTileName(), targetCell.getActor())) {
             movementService.movePlayer(player, dx, dy);
-        } else if (targetCell.getActor() instanceof Monster) {
-            handleCombat(player, targetCell.getActor());
+            if (targetCell.getActor() instanceof Monster) {
+                handleCombat(player, targetCell.getActor());
+            }
+
+            interactWithTile(player.getCell());
         }
 
-        interactWithTile(player.getCell());
     }
-
-
-
 }

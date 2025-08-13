@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 
 public class Crab extends Monster {
-    public static final char symbol = 'b';
     private int dirX = 1;
 
     public Crab(Cell cell) {
@@ -19,17 +18,20 @@ public class Crab extends Monster {
     }
 
     private boolean tryMove(int dx, int dy) {
+        Cell currentCell = getCell();
         Cell nextCell = getCell().getNeighbor(dx, dy);
         if (nextCell == null || nextCell.getActor() != null || nextCell.getType() == CellType.WALL) {
             return false;
         }
-        move(dx, dy);
+        currentCell.setActor(null);
+        nextCell.setActor(this);
+        setCell(nextCell);
         return true;
     }
 
     @Override
     public char getSymbol() {
-        return symbol;
+        return 'b';
     }
 
     @Override
