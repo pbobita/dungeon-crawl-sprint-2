@@ -83,6 +83,9 @@ public class MapLoader {
                         case CAT:
                             new Cat(cell);
                             break;
+                        case QUEEN:
+                            new Queen(cell);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
