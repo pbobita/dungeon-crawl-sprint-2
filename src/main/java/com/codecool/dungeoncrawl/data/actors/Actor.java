@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 public abstract class Actor implements Drawable {
     private Cell cell;
     private String inventory = "";
+    private String name;
     private int health;
     private int maxHealth;
     private int attackPower;
@@ -92,5 +93,13 @@ public abstract class Actor implements Drawable {
     }
 
     public void setInventoryFromString(String inventory) {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

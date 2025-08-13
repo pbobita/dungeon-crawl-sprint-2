@@ -70,6 +70,10 @@ public class StatusPane {
     }
     public void setAttackPowerValue(String text) { attackPowerValueLabel.setText(text); }
     public void setInventoryValue(String text) { inventoryValueLabel.setText(text); }
+    public void setNameValueLabel(Label nameValueLabel) {
+        this.nameValueLabel = nameValueLabel;
+    }
+
     public Label getNameValueLabel() {
         return nameValueLabel;
     }
