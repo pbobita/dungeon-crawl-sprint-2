@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.MapLoadable;
 
 public abstract class Actor implements Drawable, MapLoadable {
     private Cell cell;
+    private String name;
     private int health;
     private int maxHealth;
     private int attackPower;
@@ -81,6 +82,11 @@ public abstract class Actor implements Drawable, MapLoadable {
         this.attackPower = attackPower;
     }
 
-    public void setInventoryFromString(String inventory) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

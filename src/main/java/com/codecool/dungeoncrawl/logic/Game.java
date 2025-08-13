@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
+import com.codecool.dungeoncrawl.data.ItemFactory;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
 import com.codecool.dungeoncrawl.ui.UI;
@@ -25,7 +26,8 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         JdbcDao jdbcdao = new JdbcDao();
-        PlayerDao playerDAO = new PlayerDao(jdbcdao);
+        ItemFactory itemFactory = new ItemFactory();
+        PlayerDao playerDAO = new PlayerDao(jdbcdao, itemFactory);
         MovementService movementService = new MovementService();
         ItemService itemService = new ItemService();
         ItemDao itemDAO = new ItemDao(jdbcdao);

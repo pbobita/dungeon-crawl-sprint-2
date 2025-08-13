@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class ChainMail extends Item {
+
     public ChainMail(Cell cell, char symbol) {
         super(cell, symbol);
     }
@@ -17,9 +18,8 @@ public class ChainMail extends Item {
     @Override
     public void onPickUp(Player player, Cell cell) {
         Integer boost = ItemDao.getIntStat("chainMail", "maxHealthIncrease");
-        int max = player.getMaxHealth();
-        player.setMaxHealth(max + boost);
-        player.setInventory(player.getInventory() + " ChainMail");
+        player.setMaxHealth(player.getMaxHealth() + boost);
+        player.getInventory().add(this);
         setEquipped(true);
         cell.setItem(null);
     }
