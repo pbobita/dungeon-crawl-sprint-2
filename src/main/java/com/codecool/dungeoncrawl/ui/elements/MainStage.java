@@ -96,9 +96,7 @@ public class MainStage {
     }
 
     public void handleExit() {
-        menuScreen.getExitButton().setOnAction(event -> {
-            System.exit(0);
-        });
+        menuScreen.getExitButton().setOnAction(event -> System.exit(0));
     }
 
     public void handleNameInput() {
