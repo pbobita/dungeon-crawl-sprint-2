@@ -58,6 +58,7 @@ public class PlayerDao {
         String name = rs.getString("name");
 
         Player player = new Player(map.getCell(x, y));
+
         player.setHealth(health);
         player.setAttackPower(attackPower);
         player.getInventory().fromSaveString(inventoryData, itemFactory);

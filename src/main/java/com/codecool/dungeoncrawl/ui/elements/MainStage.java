@@ -1,13 +1,8 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
-
-import com.codecool.dungeoncrawl.dao.JdbcDao;
-import com.codecool.dungeoncrawl.dao.PlayerDao;
-import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.UI;
-import com.codecool.dungeoncrawl.data.items.Item;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,7 +30,6 @@ public class MainStage {
         this.ui = ui;
         this.player = player;
         statusPane = new StatusPane();
-
         scene = setUpScene();
     }
 
@@ -117,8 +111,6 @@ public class MainStage {
             root.getChildren().remove(inputHandler);
             inputHandler.getInput().clear();
             gameLogic.getMap().getPlayer().setName(name);
-            System.out.println("Player name: " + gameLogic.getMap().getPlayer().getName());
-            System.out.println("Is admin: " + gameLogic.getMap().getPlayer().isAdmin());
         }
     }
 
