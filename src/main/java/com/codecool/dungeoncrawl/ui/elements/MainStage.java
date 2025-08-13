@@ -65,7 +65,17 @@ public class MainStage {
     }
 
     public void handleRestartGame() {
+        gameLogic.startNewGame();
+        player = gameLogic.getMap().getPlayer();
 
+        StatusPane sp = getStatusPane();
+        sp.setHealthValue(String.valueOf(player.getHealth()));
+        sp.setAttackPowerValue(String.valueOf(player.getAttackPower()));
+        sp.setMaxHealthValue(String.valueOf(player.getMaxHealth()));
+        sp.setNameValue(player.getName());
+
+        ui.refresh();
+        handleStartNewGame();
     }
 
     public void handleStartNewGame() {
