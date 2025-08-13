@@ -116,6 +116,8 @@ public class GameLogic {
         interactWithTile(player.getCell());
     }
 
-
+    public void startNewGame() {
+        this.map = MapLoader.loadMap(false);
+    }
 
 }
