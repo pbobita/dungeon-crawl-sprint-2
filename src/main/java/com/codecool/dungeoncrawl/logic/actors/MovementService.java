@@ -22,14 +22,19 @@ public class MovementService {
         player.getCell().setActor(null);
         nextCell.setActor(player);
         player.setCell(nextCell);
-
     }
 
     public boolean canMoveTo(Player player, String tile, Actor actor) {
-        return (actor == null
-                && !player.isDead()
-                && !Set.of("wall", "door", "empty").contains(tile))
-                || (tile.equals("door") && player.getInventory().contains("Key")
-        );
+        if (actor != null || player.isDead()) {
+            return false;
+        }
+
+        if (player.isAdmin()) {
+            return true;
+        }
+
+        return !Set.of("wall", "door", "empty").contains(tile)
+                || (tile.equals("door") && player.getInventory().contains("Key"));
     }
+
 }

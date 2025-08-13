@@ -8,24 +8,17 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Monster;
 import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.items.Potion;
-import com.codecool.dungeoncrawl.data.items.Sword;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
 
-import java.util.Set;
-
 public class GameLogic {
     private GameMap map;
     private final PlayerDao playerDAO;
-    private MainStage mainStage;
-
-    public GameLogic(PlayerDao playerDAO) {
-
     private final MovementService movementService;
     private final ItemService itemService;
     private final ItemDao itemDAO;
+    private MainStage mainStage;
 
     public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO) {
         this.movementService = movementService;
@@ -63,7 +56,7 @@ public class GameLogic {
 
     public String getPlayerDamage() { return Integer.toString(map.getPlayer().getAttackPower()); }
 
-    public String getPlayerInventory() {return map.getPlayer().getInventory();}
+    public String getPlayerInventory() {return map.getPlayer().getInventory().toSaveString();}
 
     public String getPlayerName() {
         return map.getPlayer().getName();
@@ -101,7 +94,7 @@ public class GameLogic {
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
             cell.getItem().onPickUp(map.getPlayer(), cell);
-        } else if (cell.getType().equals(CellType.SAVE_TILE)) {
+        } else if (cell.getType() == CellType.SAVE_TILE) {
             playerDAO.savePlayer(map.getPlayer());
         }
     }

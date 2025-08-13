@@ -1,13 +1,8 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
-
-import com.codecool.dungeoncrawl.dao.JdbcDao;
-import com.codecool.dungeoncrawl.dao.PlayerDao;
-import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.logic.GameLogic;
-import com.codecool.dungeoncrawl.repository.GameState;
 import com.codecool.dungeoncrawl.ui.UI;
-import com.codecool.dungeoncrawl.data.items.Item;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,15 +22,14 @@ public class MainStage {
     private MenuScreen menuScreen;
     private final UI ui;
     private final GameLogic gameLogic;
-    private Actor actor;
+    private Player player;
 
-    public MainStage(Canvas canvas, GameLogic gameLogic, UI ui, Actor actor) {
+    public MainStage(Canvas canvas, GameLogic gameLogic, UI ui, Player player) {
         this.canvas = canvas;
         this.gameLogic = gameLogic;
         this.ui = ui;
-        this.actor = actor;
+        this.player = player;
         statusPane = new StatusPane();
-
         scene = setUpScene();
     }
 
@@ -65,9 +59,13 @@ public class MainStage {
         StackPane.setAlignment(menuScreen, Pos.CENTER);
         root.getChildren().add(menuScreen);
 
-        handleStartNewGame();
+        handleRestartGame();
         handleLoadGame();
         handleExit();
+    }
+
+    public void handleRestartGame() {
+
     }
 
     public void handleStartNewGame() {
@@ -112,7 +110,7 @@ public class MainStage {
             statusPane.setNameValue(name);
             root.getChildren().remove(inputHandler);
             inputHandler.getInput().clear();
-            actor.setName(name);
+            gameLogic.getMap().getPlayer().setName(name);
         }
     }
 

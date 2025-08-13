@@ -61,4 +61,3 @@ public class MenuScreen extends VBox {
         return exitButton;
     }
 }
-

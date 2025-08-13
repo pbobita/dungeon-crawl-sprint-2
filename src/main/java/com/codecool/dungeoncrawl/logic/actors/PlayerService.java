@@ -8,9 +8,11 @@ public class PlayerService {
     public void pickUpItem(Player player, Item item) {
         if (item == null) return;
 
-        String inventory = player.getInventory();
-        player.setInventory(inventory + item.getTileName() + ", ");
-        //item.getCell().setItem(null);
+        player.getInventory().add(item);
+        if (item.getCell() != null) {
+            item.getCell().setItem(null);
+        }
+
     }
 
     public void heal(Player player, int amount) {
