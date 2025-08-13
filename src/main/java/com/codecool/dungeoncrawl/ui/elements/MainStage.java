@@ -1,17 +1,22 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
+
 import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.repository.GameState;
 import com.codecool.dungeoncrawl.ui.UI;
+import com.codecool.dungeoncrawl.data.items.Item;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+
+import java.util.List;
 
 public class MainStage {
     private final Canvas canvas;
@@ -118,7 +123,7 @@ public class MainStage {
         this.statusPane.setHealthValue(text);
     }
     public void setAttackPowerLabelText(String text) { this.statusPane.setAttackPowerValue(text); }
-    public void setInventoryLabelText(String text) { this.statusPane.setInventoryValue(text); }
+    public void setInventoryLabelText(List<String> list) { this.statusPane.setInventoryItems(list); }
     public void setMaxHealthLabelText(String text) { this.statusPane.setMaxHealthValue(text); }
     public void setNameValueLabel(String text) { this.statusPane.setNameValue(text); }
     public StatusPane getStatusPane() {
