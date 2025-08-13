@@ -14,6 +14,11 @@ public class Cultist extends Monster {
     }
 
     @Override
+    public char getSymbol() {
+        return 'c';
+    }
+
+    @Override
     public String getTileName() {
         return "cultist";
     }

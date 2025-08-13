@@ -23,8 +23,9 @@ public abstract class MoveHandler implements KeyHandler{
         if (!event.getCode().equals(keyCode)) return;
 
         boolean isAdmin = statusPane.getNameValueLabel().getText().equals("admin");
-        logic.movePlayer(dx, dy, isAdmin);
+        logic.movePlayer(dx, dy);
         logic.getMap().moveMonsters();
+
     }
 
 }

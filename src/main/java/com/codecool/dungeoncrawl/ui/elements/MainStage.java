@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
+
 import java.awt.*;
 
 public class MainStage {
@@ -58,7 +60,7 @@ public class MainStage {
         this.statusPane.setHealthValue(text);
     }
     public void setAttackPowerLabelText(String text) { this.statusPane.setAttackPowerValue(text); }
-    public void setInventoryLabelText(String text) { this.statusPane.setInventoryValue(text); }
+    public void setInventoryLabelText(List<String> list) { this.statusPane.setInventoryItems(list); }
     public void setMaxHealthLabelText(String text) { this.statusPane.setMaxHealthValue(text); }
     public StatusPane getStatusPane() {
         return statusPane;
