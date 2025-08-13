@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Monster;
+import com.codecool.dungeoncrawl.data.actors.NPC;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 import java.util.ArrayList;
@@ -56,6 +57,26 @@ public class GameMap {
             }
         }
         return result;
+    }
+
+    public List<NPC> getNPCs() {
+        List<NPC> result = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Actor actor = getCell(x, y).getActor();
+                if (actor instanceof NPC) {
+                    result.add((NPC) actor);
+                }
+            }
+        }
+        return result;
+    }
+
+    public void moveFollower() {
+        List<NPC> npcs = new ArrayList<>(getNPCs());
+        for (NPC npc : npcs) {
+            npc.moveOne(player);
+        }
     }
 
     public void moveMonsters() {
