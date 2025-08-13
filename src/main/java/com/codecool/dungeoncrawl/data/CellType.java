@@ -1,27 +1,40 @@
 package com.codecool.dungeoncrawl.data;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum CellType {
-    EMPTY("empty"),
-    FLOOR("floor"),
-    WALL("wall"),
-    LOOT("loot"),
-    DOOR("door"),
-    KEY("key"),
-    SWORD("sword"),
-    POTION("potion"),
-    NEXTFLOOR("nextFloor"),
-    SAVE_TILE("saveTile"),
-    LOAD_TILE("loadTile"),
-    MONSTER("monster"),
-    CHAIN_MAIL("chainMail"),;
+    EMPTY("empty", ' '),
+    FLOOR("floor", '.'),
+    WALL("wall", '#'),
+    LOOT("loot", 'l'),
+    DOOR("door", 'd'),
+    KEY("key", 'k'),
+    SWORD("sword", 'w'),
+    POTION("potion", 't'),
+    NEXT_FLOOR("nextFloor", 'n'),
+    SAVE_TILE("saveTile", '%'),
+    SKELETON("skeleton", 's'),
+    GNOME("gnome", 'g'),
+    SPIDER("spider", 'p'),
+    CULTIST("cultist", 'c'),
+    PLAYER("player", '@'),
+    LOAD_TILE("loadTile", '*'),
+    CHAIN_MAIL("chainMail", 'a');
 
     private final String tileName;
+    private final char symbol;
 
-    CellType(String tileName) {
+    CellType(String tileName, char symbol) {
         this.tileName = tileName;
+        this.symbol = symbol;
     }
 
     public String getTileName() {
         return tileName;
+    }
+
+    public static Optional<CellType> getBySymbol(char symbol){
+        return Arrays.stream(CellType.values()).filter(e -> e.symbol == symbol).findFirst();
     }
 }

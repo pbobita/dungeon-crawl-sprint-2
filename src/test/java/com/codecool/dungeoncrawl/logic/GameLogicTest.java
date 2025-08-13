@@ -5,6 +5,8 @@ import com.codecool.dungeoncrawl.dao.JdbcDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.ItemService;
+import com.codecool.dungeoncrawl.logic.actors.MovementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
@@ -25,7 +27,9 @@ class GameLogicTest {
         JdbcDao jdbcdao = new JdbcDao();
         PlayerDao playerDAO = new PlayerDao(jdbcdao);
         ItemDao itemDAO = new ItemDao(jdbcdao);
-        logic = new GameLogic(playerDAO, itemDAO);
+        MovementService movementService = new MovementService();
+        ItemService itemService = new ItemService();
+        logic = new GameLogic(playerDAO, movementService, itemService, itemDAO);
 
         when(attacker.getCell()).thenReturn(attackerCell);
         when(defender.getCell()).thenReturn(defenderCell);

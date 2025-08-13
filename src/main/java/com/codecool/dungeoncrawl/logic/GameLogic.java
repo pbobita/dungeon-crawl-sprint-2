@@ -3,21 +3,28 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Monster;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.items.Potion;
 import com.codecool.dungeoncrawl.data.items.Sword;
+import com.codecool.dungeoncrawl.logic.actors.ItemService;
+import com.codecool.dungeoncrawl.logic.actors.MovementService;
 
 import java.util.Set;
 
 public class GameLogic {
     private GameMap map;
     private final PlayerDao playerDAO;
+    private final MovementService movementService;
+    private final ItemService itemService;
     private final ItemDao itemDAO;
 
-    public GameLogic(PlayerDao playerDAO, ItemDao itemDAO) {
+    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO) {
+        this.movementService = movementService;
+        this.itemService = itemService;
         this.itemDAO = itemDAO;
         this.map = MapLoader.loadMap(false);
         this.playerDAO = playerDAO;
@@ -70,32 +77,22 @@ public class GameLogic {
         playerDAO.loadPlayer().ifPresent(loadedMap -> this.map = loadedMap);
     }
 
-    private boolean canMoveTo(String tile, Actor actor, Player player) {
-        return (actor == null
-                    && !player.isDead()
-                    && !Set.of("wall", "door", "empty").contains(tile))
-                    || (tile.equals("door") && player.getInventory().contains("Key")
-        );
-    }
-
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
             cell.getItem().onPickUp(map.getPlayer(), cell);
-        } else if (cell.getTileName().equals("saveTile")) {
+        } else if (cell.getType().equals(CellType.SAVE_TILE)) {
             playerDAO.savePlayer(map.getPlayer());
         }
     }
 
-    public void movePlayer(int dx, int dy, boolean isAdmin) {
+    public void movePlayer(int dx, int dy) {
         Player player = map.getPlayer();
         Cell targetCell = map.getCell(player.getX() + dx, player.getY() + dy);
 
-        if (canMoveTo(targetCell.getTileName(), targetCell.getActor(), player)) {
-            player.move(dx, dy);
+        if (movementService.canMoveTo(player, targetCell.getTileName(), targetCell.getActor())) {
+            movementService.movePlayer(player, dx, dy);
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
-        } else if (isAdmin) {
-            player.adminMove(dx, dy);
         }
 
         interactWithTile(player.getCell());

@@ -9,6 +9,11 @@ public class Gnome extends Monster { ;
     }
 
     @Override
+    public char getSymbol() {
+        return 'g';
+    }
+
+    @Override
     public String getTileName() {
         return "gnome";
     }
