@@ -21,7 +21,8 @@ public enum CellType {
     PLAYER("player", '@'),
     LOAD_TILE("loadTile", '*'),
     CHAIN_MAIL("chainMail", 'a'),
-    CRAB("crab", 'b');
+    CRAB("crab", 'b'),
+    CAT("cat", '^');
 
     private final String tileName;
     private final char symbol;
