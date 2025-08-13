@@ -97,12 +97,12 @@ public class GameLogic {
 
         if (movementService.canMoveTo(player, targetCell.getTileName(), targetCell.getActor())) {
             movementService.movePlayer(player, dx, dy);
+        }
             if (targetCell.getActor() instanceof Monster) {
                 handleCombat(player, targetCell.getActor());
             }
 
             interactWithTile(player.getCell());
-        }
 
     }
 }
