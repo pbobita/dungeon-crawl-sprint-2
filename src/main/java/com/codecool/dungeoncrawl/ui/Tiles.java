@@ -41,12 +41,11 @@ public class Tiles {
         tileMap.put("loadTile", new Tile(24, 24));
         tileMap.put("chainMail", new Tile(1, 23));
         tileMap.put("crab", new Tile(25, 5));
-        tileMap.put("swordmaster", new Tile(30, 2));
+        tileMap.put("boss", new Tile(30, 2));
         tileMap.put("cat", new Tile(30, 7));
         tileMap.put("queen", new Tile(29, 3));
         tileMap.put("gem", new Tile(23, 4));
         tileMap.put("repo", new Tile(13, 27));
-
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

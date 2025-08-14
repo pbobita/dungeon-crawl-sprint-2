@@ -6,6 +6,8 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.*;
+import com.codecool.dungeoncrawl.data.items.NextFloor;
+import com.codecool.dungeoncrawl.ui.UI;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
@@ -13,6 +15,10 @@ import javafx.scene.control.Button;
 
 import java.util.List;
 import java.util.Optional;
+import com.codecool.dungeoncrawl.ui.elements.StatusPane;
+import com.codecool.dungeoncrawl.ui.keyeventhandler.*;
+
+import java.util.Set;
 
 public class GameLogic {
     private GameMap map;
@@ -22,14 +28,16 @@ public class GameLogic {
     private final ItemService itemService;
     private final ItemDao itemDAO;
     private MainStage mainStage;
+    private UI ui;
 
-    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO, String mapData) {
+    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO, String mapData, UI ui) {
         this.movementService = movementService;
         this.itemService = itemService;
         this.itemDAO = itemDAO;
         this.mapData = mapData;
         this.map = MapLoader.loadMap(mapData,false);
         this.playerDAO = playerDAO;
+        this.ui = ui;
     }
 
     public void setMainStage(MainStage mainStage) {
@@ -46,6 +54,10 @@ public class GameLogic {
 
     public void setup() {
 
+    }
+
+    public void setMapData(String mapData) {
+        this.mapData = mapData;
     }
 
     public Cell getCell(int x, int y) {
@@ -78,14 +90,12 @@ public class GameLogic {
         return String.valueOf(map.getPlayer().getMaxMana());
     }
 
-
     public GameMap getMap() {
         return map;
     }
 
     public void handleCombat(Actor attacker, Actor defender) {
         defender.gainDamage(attacker.getAttackPower());
-
         if (defender.isDead()) {
             defender.getCell().setActor(null);
             handleGameEnding();
@@ -125,6 +135,34 @@ public class GameLogic {
         });
     }
 
+    public void loadPlayerOnNextMap() {
+        Player player = map.getPlayer();
+
+        String mapText = MapLoader.loadMapFile("map2.txt");
+        GameMap newMap = MapLoader.loadMap(mapText, false);
+
+        Cell newStartingCell = newMap.getCell(3, 11);
+
+        newStartingCell.setActor(player);
+        player.setCell(newStartingCell);
+        newMap.setPlayer(player);
+
+        this.map = newMap;
+
+        mainStage.setPlayer(player);
+        mainStage.getUi().refresh();
+
+        StatusPane statusPane = mainStage.getUi().getMainStage().getStatusPane();
+        Set<KeyHandler> keyHandlers = Set.of(
+                new Up(statusPane), new Down(statusPane),
+                new Left(statusPane), new Right(statusPane),
+                new ESC(), new Unstuck()
+        );
+        mainStage.getUi().setKeyHandlers(keyHandlers);
+    }
+
+
+
 
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
@@ -144,13 +182,16 @@ public class GameLogic {
 
         if (movementService.canMoveTo(player, targetCell.getTileName(), targetCell.getActor())) {
             movementService.movePlayer(player, dx, dy);
+            if (player.getCell().getItem() instanceof NextFloor) {
+                loadPlayerOnNextMap();
+                return;
+            }
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
         } else if (targetCell.getActor() instanceof NPC) {
             interactWithNPC((NPC) targetCell.getActor(), player);
         }
         interactWithTile(player.getCell());
-
     }
 
     public void catMoveOutOfWay(Player player, Cat cat) {

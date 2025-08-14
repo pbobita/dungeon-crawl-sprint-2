@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.data.*;
 import com.codecool.dungeoncrawl.data.skills.PyroBlast;
 
 public class Player extends Actor {
-    private final Inventory inventory;
+    private Inventory inventory;
     private String name;
     private int currentMana;
     private int maxMana;
@@ -35,6 +35,10 @@ public class Player extends Actor {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override

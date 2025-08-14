@@ -24,8 +24,8 @@ public enum CellType {
     CRAB("crab", 'b'),
     CAT("cat", '^'),
     QUEEN("queen", 'q'),
-    GEM("gem", '8');
-
+    GEM("gem", '8'),
+    BOSS("boss", 'y');
 
     private final String tileName;
 

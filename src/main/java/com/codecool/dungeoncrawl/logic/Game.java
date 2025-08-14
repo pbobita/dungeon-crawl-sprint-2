@@ -34,7 +34,7 @@ public class Game extends Application {
         ItemDao itemDAO = new ItemDao(jdbcdao);
         ItemDao.init(itemDAO);
         String mapData = MapLoader.loadMapFile(FILE_NAME);
-        GameLogic logic = new GameLogic(playerDAO, movementService, itemService, itemDAO, mapData);
+        GameLogic logic = new GameLogic(playerDAO, movementService, itemService, itemDAO, mapData, ui);
         this.logic = logic;
         this.ui = new UI(logic);
 

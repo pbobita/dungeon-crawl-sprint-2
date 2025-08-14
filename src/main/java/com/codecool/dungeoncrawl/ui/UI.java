@@ -49,6 +49,8 @@ public class UI {
         Cell playerCell = logic.getMap().getPlayer().getCell();
         if (playerCell.getTileName().equals("loadTile")) {
             loadPlayerAndRefresh();
+        } else if (playerCell.getTileName().equals("nextFloor")) {
+            loadPlayerOnNextMapAndRefresh();
         } else {
             refresh();
         }
@@ -81,6 +83,11 @@ public class UI {
 
     public void loadPlayerAndRefresh() {
         logic.reloadPlayer();
+        refresh();
+    }
+
+    public void loadPlayerOnNextMapAndRefresh() {
+        logic.loadPlayerOnNextMap();
         refresh();
     }
 

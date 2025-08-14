@@ -49,7 +49,7 @@ public class MapLoader {
                     cell.setType(CellType.FLOOR);
 
                     switch (cellType) {
-                        case EMPTY, WALL, LOOT, DOOR, NEXT_FLOOR, SAVE_TILE, FLOOR, LOAD_TILE -> cell.setType(cellType);
+                        case EMPTY, WALL, LOOT, DOOR, SAVE_TILE, FLOOR, LOAD_TILE -> cell.setType(cellType);
                         case KEY -> new Key(cell, 'k');
                         case SWORD -> new Sword(cell, 'w');
                         case CHAIN_MAIL -> new ChainMail(cell, 'a');
@@ -58,6 +58,7 @@ public class MapLoader {
                         case GNOME -> new Gnome(cell);
                         case SPIDER -> new Spider(cell);
                         case CULTIST -> new Cultist(cell);
+                        case NEXT_FLOOR -> new NextFloor(cell, 'n');
                         case PLAYER -> {
                             map.setPlayer(new Player(cell));
                             if (playerSpawnByLoad) {
@@ -68,6 +69,7 @@ public class MapLoader {
                         case CAT -> new Cat(cell);
                         case GEM -> new Gem(cell, '8');
                         case QUEEN ->  new Queen(cell);
+                        case BOSS -> new Boss(cell);
                         default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }

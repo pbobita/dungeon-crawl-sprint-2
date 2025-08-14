@@ -33,7 +33,7 @@ public class MovementService {
             return true;
         }
 
-        return !Set.of("wall", "door", "empty").contains(tile)
+        return !Set.of("wall", "door", "empty", "nextFloor").contains(tile)
                 || (tile.equals("door") && player.getInventory().contains("Key"));
     }
 
