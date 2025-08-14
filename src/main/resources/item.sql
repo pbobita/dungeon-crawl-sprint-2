@@ -37,4 +37,4 @@ ON CONFLICT (name) DO UPDATE
         symbol              = EXCLUDED.symbol;
 
 --Ha szeretnétek új itemet belerakni itt, akkor előbb deleteljétek a táblát és utána a kód efőlőtti részét futtassátok
-DROP TABLE item
+-- DROP TABLE item

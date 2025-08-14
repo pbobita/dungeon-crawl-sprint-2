@@ -66,7 +66,7 @@ public class PlayerDao {
 
     public List<String> getAllSavedPlayerNames() {
         List<String> names = new ArrayList<>();
-        jdbcDao.executeQuery("SELECT name FROM game", stmt -> {}, rs -> {
+        jdbcDao.executeQuery("SELECT DISTINCT name FROM game", stmt -> {}, rs -> {
             while (rs.next()) {
                 names.add(rs.getString("name"));
             }
@@ -82,7 +82,7 @@ public class PlayerDao {
         String inventoryData = rs.getString("inventory");
         String name = rs.getString("name");
 
-        Player player = new Player(map.getCell(x, y));
+        Player player = new Player(map.getCell(x, y), 5, 5);
 
         player.setHealth(health);
         player.setAttackPower(attackPower);

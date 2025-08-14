@@ -24,6 +24,11 @@ public class StatusPane {
     private Label perSignLabel;
     private Label nameTextLabel;
     private Label nameValueLabel;
+    private Label manaTextLabel;
+    private Label manaValueLabel;
+    private Label manaMaxTextLabel;
+    private Label manaMaxValueLabel;
+    private Label manaPerSignLabel;
 
     public StatusPane() {
         ui = new GridPane();
@@ -39,6 +44,11 @@ public class StatusPane {
         healthTextLabel = new Label("Health: ");
         healthValueLabel = new Label();
         perSignLabel = new Label("/");
+        manaTextLabel = new Label("Mana: ");
+        manaValueLabel = new Label();
+        manaMaxTextLabel = new Label("Mana: ");
+        manaMaxValueLabel = new Label();
+        manaPerSignLabel = new Label("/");
     }
 
     public BorderPane build() {
@@ -59,6 +69,11 @@ public class StatusPane {
 
         ui.add(inventoryTextLabel, 0, 3);
         ui.add(inventoryBox, 1, 3);
+
+        HBox manaBox = new HBox(5);
+        manaBox.getChildren().addAll(manaValueLabel, manaPerSignLabel, manaMaxValueLabel);
+        ui.add(manaTextLabel, 0, 4);
+        ui.add(manaBox, 1, 4);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setRight(ui);
@@ -90,5 +105,13 @@ public class StatusPane {
 
     public Label getNameValueLabel() {
         return nameValueLabel;
+    }
+
+    public void setManaValueLabel(String text) {
+        manaValueLabel.setText(text);
+    }
+
+    public void setManaMaxValueLabel(String text) {
+        manaMaxValueLabel.setText(text);
     }
 }
