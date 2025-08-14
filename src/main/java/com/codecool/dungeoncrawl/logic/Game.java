@@ -39,6 +39,7 @@ public class Game extends Application {
         this.ui = new UI(logic);
 
         StatusPane statusPane = ui.getMainStage().getStatusPane();
+        this.keyHandlers = Set.of(new Up(statusPane), new Down(statusPane), new Left(statusPane), new Right(statusPane), new ESC(), new Space());
         this.keyHandlers = Set.of(new Up(statusPane), new Down(statusPane), new Left(statusPane), new Right(statusPane), new ESC(), new Unstuck());
         ui.setKeyHandlers(keyHandlers);
 

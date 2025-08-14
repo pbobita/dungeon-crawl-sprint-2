@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 public class Gnome extends Monster {
 
     public Gnome(Cell cell) {
-        super(cell, 2, 2, 2);
+        super(cell, 2, 2, 2, null);
     }
 
     @Override

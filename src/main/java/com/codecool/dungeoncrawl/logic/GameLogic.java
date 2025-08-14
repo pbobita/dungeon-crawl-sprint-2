@@ -9,6 +9,7 @@ import com.codecool.dungeoncrawl.data.actors.*;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
+import javafx.scene.control.Button;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,6 +70,14 @@ public class GameLogic {
         return map.getPlayer().getName();
     }
 
+    public String getPlayerMana() {
+        return String.valueOf(map.getPlayer().getCurrentMana());
+    }
+
+    public String getPlayerMaxMana() {
+        return String.valueOf(map.getPlayer().getMaxMana());
+    }
+
 
     public GameMap getMap() {
         return map;
@@ -76,15 +85,27 @@ public class GameLogic {
 
     public void handleCombat(Actor attacker, Actor defender) {
         defender.gainDamage(attacker.getAttackPower());
+
         if (defender.isDead()) {
             defender.getCell().setActor(null);
             handleGameEnding();
-        } else {
-            attacker.gainDamage(defender.getAttackPower());
-            if (attacker.isDead()) {
-                attacker.getCell().setActor(null);
-                handleGameEnding();
-            }
+            return;
+        }
+
+        if (defender instanceof Monster && defender.getAbility() != null) {
+            defender.getAbility().use(defender);
+        }
+
+        attacker.gainDamage(defender.getAttackPower());
+
+        if (attacker.isDead()) {
+            attacker.getCell().setActor(null);
+            handleGameEnding();
+            return;
+        }
+
+        if (attacker instanceof Monster && attacker.getAbility() != null) {
+            attacker.getAbility().use(attacker);
         }
     }
 

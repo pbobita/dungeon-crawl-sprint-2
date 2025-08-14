@@ -85,6 +85,8 @@ public class MainStage {
         sp.setAttackPowerValue(String.valueOf(player.getAttackPower()));
         sp.setMaxHealthValue(String.valueOf(player.getMaxHealth()));
         sp.setNameValue(player.getName());
+        sp.setManaValueLabel(String.valueOf(player.getCurrentMana()));
+        sp.setManaMaxValueLabel(String.valueOf(player.getMaxMana()));
 
         ui.refresh();
         handleStartNewGame();
@@ -165,6 +167,11 @@ public class MainStage {
     public StatusPane getStatusPane() {
         return statusPane;
     }
+    public void setManaValue(String text) {
+        this.statusPane.setManaValueLabel(text);
+    }
+    public void setMaxManaValue(String text) {
+        this.statusPane.setManaMaxValueLabel(text);
 
     public UI getUi() {
         return ui;
