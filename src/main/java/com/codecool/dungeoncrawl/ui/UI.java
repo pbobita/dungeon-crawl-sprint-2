@@ -29,7 +29,9 @@ public class UI {
                 logic.getMapHeight() * Tiles.TILE_WIDTH);
         this.logic = logic;
         this.context = canvas.getGraphicsContext2D();
-        this.mainStage = new MainStage(canvas);
+        this.mainStage = new MainStage(canvas, logic, this, logic.getMap().getPlayer());
+
+        logic.setMainStage(mainStage);
     }
 
     public void setUpPain(Stage primaryStage) {
@@ -47,6 +49,8 @@ public class UI {
         Cell playerCell = logic.getMap().getPlayer().getCell();
         if (playerCell.getTileName().equals("loadTile")) {
             loadPlayerAndRefresh();
+        } else if (playerCell.getTileName().equals("nextFloor")) {
+            loadPlayerOnNextMapAndRefresh();
         } else {
             refresh();
         }
@@ -68,6 +72,7 @@ public class UI {
                 }
             }
         }
+        mainStage.setNameValueLabel(logic.getPlayerName());
         mainStage.setHealthLabelText(logic.getPlayerHealth());
         mainStage.setMaxHealthLabelText(logic.getPlayerMaxHealth());
         mainStage.setAttackPowerLabelText(logic.getPlayerDamage());
@@ -76,6 +81,11 @@ public class UI {
 
     public void loadPlayerAndRefresh() {
         logic.reloadPlayer();
+        refresh();
+    }
+
+    public void loadPlayerOnNextMapAndRefresh() {
+        logic.loadPlayerOnNextMap();
         refresh();
     }
 

@@ -6,8 +6,12 @@ public abstract class Monster extends Actor {
     public Monster(Cell cell, int health, int attackPower, int maxHealth) {
         super(cell, health, attackPower, maxHealth);
     }
+
     @Override
     public String getTileName() {
         return "monster";
+    }
+
+    public void moveOne() {
     }
 }

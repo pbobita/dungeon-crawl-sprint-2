@@ -1,13 +1,12 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
-import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.MapLoadable;
 
-public abstract class Actor implements Drawable {
+public abstract class Actor implements Drawable, MapLoadable {
     private Cell cell;
-    private String inventory = "";
+    private String name;
     private int health;
     private int maxHealth;
     private int attackPower;
@@ -18,27 +17,6 @@ public abstract class Actor implements Drawable {
         this.maxHealth = maxHealth;
         this.attackPower = attackPower;
         this.cell.setActor(this);
-    }
-
-    public void move(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if(nextCell == null || nextCell.getActor() != null || nextCell.getType() == CellType.WALL) {
-            return;
-        }
-
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-    }
-
-    public void adminMove(int dx, int dy) {
-        Cell nextCell = cell.getNeighbor(dx, dy);
-        if(nextCell == null || nextCell.getActor() != null) {
-            return;
-        }
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
     }
 
     public int getHealth() {
@@ -55,14 +33,12 @@ public abstract class Actor implements Drawable {
 
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
 
-    public String getInventory() {return inventory; }
-
-    public void setInventory(String inventory) {
-        this.inventory = inventory;
-    }
-
     public Cell getCell() {
         return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public int getX() {
@@ -93,6 +69,11 @@ public abstract class Actor implements Drawable {
         this.attackPower = attackPower;
     }
 
-    public void setInventoryFromString(String inventory) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

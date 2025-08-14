@@ -13,10 +13,12 @@ DROP TABLE IF EXISTS game;
 
 CREATE TABLE game(
     id SERIAL PRIMARY KEY,
+    name TEXT,
     map TEXT,
     player_x INTEGER,
     player_y INTEGER,
     health INTEGER,
     attack_power INTEGER,
-    inventory TEXT
+    inventory TEXT,
+    saved_at TIMESTAMP
 );

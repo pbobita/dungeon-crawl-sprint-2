@@ -11,4 +11,9 @@ public class Skeleton extends Monster {
     public String getTileName() {
         return "skeleton";
     }
+
+    @Override
+    public char getSymbol() {
+        return 's';
+    }
 }
