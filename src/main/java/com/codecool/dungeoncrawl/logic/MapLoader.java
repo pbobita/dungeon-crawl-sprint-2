@@ -67,6 +67,8 @@ public class MapLoader {
                         }
                         case CRAB -> new Crab(cell);
                         case CAT -> new Cat(cell);
+                        case GEM -> new Gem(cell, '8');
+                        case QUEEN ->  new Queen(cell);
                         case BOSS -> new Boss(cell);
                         default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }

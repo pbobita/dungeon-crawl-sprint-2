@@ -27,7 +27,8 @@ VALUES
     ('key',     NULL, NULL, NULL, false, 'k'),
     ('potion',  NULL, 4,    NULL, false, 't'),
     ('sword',   3,    NULL, NULL, false, 'w'),
-    ('chainMail',   NULL,    NULL, 5, false, 'a')
+    ('chainMail',   NULL,    NULL, 5, false, 'a'),
+    ('gem', NULL, NULL, NULL, false, '8')
 ON CONFLICT (name) DO UPDATE
     SET attackPowerIncrease = EXCLUDED.attackPowerIncrease,
         healthIncrease      = EXCLUDED.healthIncrease,
@@ -36,4 +37,4 @@ ON CONFLICT (name) DO UPDATE
         symbol              = EXCLUDED.symbol;
 
 --Ha szeretnétek új itemet belerakni itt, akkor előbb deleteljétek a táblát és utána a kód efőlőtti részét futtassátok
-DROP TABLE item
+-- DROP TABLE item

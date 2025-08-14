@@ -7,7 +7,7 @@ public class Crab extends Monster {
     private int dirX = 1;
 
     public Crab(Cell cell) {
-        super(cell, 4, 4, 4);
+        super(cell, 4, 4, 4, null);
     }
 
     public void moveOne() {

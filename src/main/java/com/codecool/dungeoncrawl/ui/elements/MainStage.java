@@ -25,6 +25,7 @@ public class MainStage {
     private final UI ui;
     private final GameLogic gameLogic;
     private Player player;
+    private LoadByNameScreen nameScreen;
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -43,9 +44,7 @@ public class MainStage {
         BorderPane borderPane = statusPane.build();
         borderPane.setCenter(canvas);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         double width = screenSize.getWidth();
-
         double height = screenSize.getHeight();
 
         root = new StackPane(borderPane);
@@ -84,6 +83,8 @@ public class MainStage {
         sp.setAttackPowerValue(String.valueOf(player.getAttackPower()));
         sp.setMaxHealthValue(String.valueOf(player.getMaxHealth()));
         sp.setNameValue(player.getName());
+        sp.setManaValueLabel(String.valueOf(player.getCurrentMana()));
+        sp.setManaMaxValueLabel(String.valueOf(player.getMaxMana()));
 
         ui.refresh();
         handleStartNewGame();
@@ -102,7 +103,8 @@ public class MainStage {
     public void handleLoadGame() {
         menuScreen.getLoadGameButton().setOnAction(event -> {
             root.getChildren().remove(menuScreen);
-            ui.loadPlayerAndRefresh();
+            List<String> savedNames = gameLogic.getSavedPlayerNames();
+            showLoadByNameScreen(savedNames);
         });
     }
 
@@ -133,21 +135,61 @@ public class MainStage {
         }
     }
 
+    public void showLoadByNameScreen(List<String> savedNames) {
+        nameScreen = new LoadByNameScreen(savedNames, selectedName -> {
+            root.getChildren().remove(nameScreen);
+            gameLogic.loadPlayerByName(selectedName);
+            player = gameLogic.getMap().getPlayer();
+
+            statusPane.setNameValue(player.getName());
+            statusPane.setHealthValue(String.valueOf(player.getHealth()));
+            statusPane.setAttackPowerValue(String.valueOf(player.getAttackPower()));
+            statusPane.setMaxHealthValue(String.valueOf(player.getMaxHealth()));
+            ui.refresh();
+        });
+
+        StackPane.setAlignment(nameScreen, Pos.CENTER);
+        root.getChildren().add(nameScreen);
+    }
+
     public Scene getScene() {
         return scene;
     }
+
     public void setHealthLabelText(String text) {
         this.statusPane.setHealthValue(text);
     }
-    public void setAttackPowerLabelText(String text) { this.statusPane.setAttackPowerValue(text); }
-    public void setInventoryLabelText(List<String> list) { this.statusPane.setInventoryItems(list); }
-    public void setMaxHealthLabelText(String text) { this.statusPane.setMaxHealthValue(text); }
-    public void setNameValueLabel(String text) { this.statusPane.setNameValue(text); }
+
+    public void setAttackPowerLabelText(String text) {
+        this.statusPane.setAttackPowerValue(text);
+    }
+
+    public void setInventoryLabelText(List<String> list) {
+        this.statusPane.setInventoryItems(list);
+    }
+
+    public void setMaxHealthLabelText(String text) {
+        this.statusPane.setMaxHealthValue(text);
+    }
+
+    public void setNameValueLabel(String text) {
+        this.statusPane.setNameValue(text);
+    }
+
     public StatusPane getStatusPane() {
         return statusPane;
     }
 
-    public UI getUi() {
-        return ui;
+    public void setManaValue(String text) {
+        this.statusPane.setManaValueLabel(text);
     }
+
+    public void setMaxManaValue(String text) {
+        this.statusPane.setManaMaxValueLabel(text);
+
+    }
+        public UI getUi () {
+            return ui;
+        }
+
 }

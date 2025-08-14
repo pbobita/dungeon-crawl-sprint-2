@@ -11,6 +11,7 @@ public class ItemFactory {
             case "potion" -> Optional.of(new Potion(null, 'p'));
             case "key" -> Optional.of(new Key(null, 'k'));
             case "chainmail" -> Optional.of(new ChainMail(null, 'c'));
+            case "gem" -> Optional.of(new Gem(null, 'g'));
             default -> Optional.empty();
         };
     }

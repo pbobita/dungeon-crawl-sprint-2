@@ -11,6 +11,10 @@ import com.codecool.dungeoncrawl.ui.UI;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
+import javafx.scene.control.Button;
+
+import java.util.List;
+import java.util.Optional;
 import com.codecool.dungeoncrawl.ui.elements.StatusPane;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.*;
 
@@ -78,7 +82,13 @@ public class GameLogic {
         return map.getPlayer().getName();
     }
 
+    public String getPlayerMana() {
+        return String.valueOf(map.getPlayer().getCurrentMana());
+    }
 
+    public String getPlayerMaxMana() {
+        return String.valueOf(map.getPlayer().getMaxMana());
+    }
 
     public GameMap getMap() {
         return map;
@@ -89,12 +99,23 @@ public class GameLogic {
         if (defender.isDead()) {
             defender.getCell().setActor(null);
             handleGameEnding();
-        } else {
-            attacker.gainDamage(defender.getAttackPower());
-            if (attacker.isDead()) {
-                attacker.getCell().setActor(null);
-                handleGameEnding();
-            }
+            return;
+        }
+
+        if (defender instanceof Monster && defender.getAbility() != null) {
+            defender.getAbility().use(defender);
+        }
+
+        attacker.gainDamage(defender.getAttackPower());
+
+        if (attacker.isDead()) {
+            attacker.getCell().setActor(null);
+            handleGameEnding();
+            return;
+        }
+
+        if (attacker instanceof Monster && attacker.getAbility() != null) {
+            attacker.getAbility().use(attacker);
         }
     }
 
@@ -151,11 +172,8 @@ public class GameLogic {
         }
     }
 
-    public void interactWithNPC(NPC npc) {
-            if(npc instanceof Cat cat){
-                cat.setFollowing(true);
-            }
-
+    public void interactWithNPC(NPC npc, Player player) {
+          npc.interact(player);
     }
 
     public void movePlayer(int dx, int dy) {
@@ -171,7 +189,7 @@ public class GameLogic {
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
         } else if (targetCell.getActor() instanceof NPC) {
-            interactWithNPC((NPC) targetCell.getActor());
+            interactWithNPC((NPC) targetCell.getActor(), player);
         }
         interactWithTile(player.getCell());
     }
@@ -203,4 +221,22 @@ public class GameLogic {
         String mapText = MapLoader.loadMapFile("map.txt");
         this.map = MapLoader.loadMap(mapText, false);
     }
+
+    public List<String> getSavedPlayerNames() {
+        return playerDAO.getAllSavedPlayerNames();
+    }
+
+    public void loadPlayerByName(String name) {
+        Optional<GameMap> optionalMap = playerDAO.loadLatestPlayerByName(name);
+
+        if (optionalMap.isPresent()) {
+            GameMap loadedMap = optionalMap.get();
+            this.map = loadedMap;
+
+            Player player = loadedMap.getPlayer();
+            player.setName(name);
+        }
+    }
+
+
 }

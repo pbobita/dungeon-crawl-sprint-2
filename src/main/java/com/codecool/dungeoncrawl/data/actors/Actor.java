@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.MapLoadable;
+import com.codecool.dungeoncrawl.data.skills.SpecialAbility;
+
 
 public abstract class Actor implements Drawable, MapLoadable {
     private Cell cell;
@@ -10,13 +12,15 @@ public abstract class Actor implements Drawable, MapLoadable {
     private int health;
     private int maxHealth;
     private int attackPower;
+    private SpecialAbility ability;
 
-    public Actor(Cell cell, int health, int attackPower, int maxHealth) {
+    public Actor(Cell cell, int health, int attackPower, int maxHealth, SpecialAbility ability) {
         this.cell = cell;
         this.health = health;
         this.maxHealth = maxHealth;
         this.attackPower = attackPower;
         this.cell.setActor(this);
+        this.ability = ability;
     }
 
     public int getHealth() {
@@ -75,5 +79,9 @@ public abstract class Actor implements Drawable, MapLoadable {
 
     public String getName() {
         return name;
+    }
+
+    public SpecialAbility getAbility() {
+        return ability;
     }
 }

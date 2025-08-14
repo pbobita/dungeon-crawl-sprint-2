@@ -1,10 +1,26 @@
 package com.codecool.dungeoncrawl.data.actors;
 
+import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.items.Item;
 
 public class Queen extends NPC{
     public Queen(Cell cell) {
         super(cell, 20, 0, 20);
+    }
+
+    public void interact(Player player) {
+        if(checkGemStatus(player)) {
+            int current = player.getCurrentMana();
+            int max = player.getMaxMana();
+            player.setMana(Math.min(current + 5, max));
+            Item gem = player.getInventory().getItem("gem");
+            player.getInventory().removeItem(gem);
+        }
+    }
+
+     boolean checkGemStatus(Player player) {
+        return player.getInventory().contains("gem");
     }
 
     @Override

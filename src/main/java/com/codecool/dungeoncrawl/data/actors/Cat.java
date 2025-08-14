@@ -23,6 +23,11 @@ public class Cat extends NPC{
         }
     }
 
+    @Override
+    public void interact(Player player) {
+        setFollowing(true);
+    }
+
     public Cell checkFollowedPosition(Player player) {
         Cell playerCell = player.getCell();
 
