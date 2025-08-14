@@ -35,12 +35,4 @@ public class Player extends Actor {
     public char getSymbol() {
         return '@';
     }
-
-    @Override
-    public void placeOn(Cell cell, GameMap map, boolean skipPlayerSpawn) {
-        cell.setType(CellType.FLOOR);
-        if (!skipPlayerSpawn) {
-            map.setPlayer(this);
-        }
-    }
 }

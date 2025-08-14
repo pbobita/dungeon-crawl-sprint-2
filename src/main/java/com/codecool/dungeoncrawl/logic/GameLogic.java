@@ -12,17 +12,19 @@ import com.codecool.dungeoncrawl.logic.actors.MovementService;
 
 public class GameLogic {
     private GameMap map;
+    private String mapData;
     private final PlayerDao playerDAO;
     private final MovementService movementService;
     private final ItemService itemService;
     private final ItemDao itemDAO;
     private MainStage mainStage;
 
-    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO) {
+    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO, String mapData) {
         this.movementService = movementService;
         this.itemService = itemService;
         this.itemDAO = itemDAO;
-        this.map = MapLoader.loadMap(false);
+        this.mapData = mapData;
+        this.map = MapLoader.loadMap(mapData,false);
         this.playerDAO = playerDAO;
     }
 
@@ -90,14 +92,21 @@ public class GameLogic {
     }
 
     public void reloadPlayer() {
-        playerDAO.loadPlayer().ifPresent(loadedMap -> this.map = loadedMap);
+        playerDAO.loadLatestPlayerByName(map.getPlayer().getName()).ifPresent(loadedMap -> {
+            this.map = loadedMap;
+
+            mainStage.setPlayer(map.getPlayer());
+
+            mainStage.getUi().refresh();
+        });
     }
+
 
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
             cell.getItem().onPickUp(map.getPlayer(), cell);
         } else if (cell.getType() == CellType.SAVE_TILE) {
-            playerDAO.savePlayer(map.getPlayer());
+            playerDAO.savePlayer(map);
         }
     }
 
@@ -147,7 +156,8 @@ public class GameLogic {
     }
 
     public void startNewGame() {
-        this.map = MapLoader.loadMap(false);
+        String mapText = MapLoader.loadMapFile("map.txt");
+        this.map = MapLoader.loadMap(mapText, false);
     }
 
 }

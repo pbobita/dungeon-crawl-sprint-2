@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.util.Set;
 
 public class Game extends Application {
+    public static final String FILE_NAME = "map.txt";
     private UI ui;
     private GameLogic logic;
     private Set<KeyHandler> keyHandlers;
@@ -32,7 +33,8 @@ public class Game extends Application {
         ItemService itemService = new ItemService();
         ItemDao itemDAO = new ItemDao(jdbcdao);
         ItemDao.init(itemDAO);
-        GameLogic logic = new GameLogic(playerDAO, movementService, itemService, itemDAO);
+        String mapData = MapLoader.loadMapFile(FILE_NAME);
+        GameLogic logic = new GameLogic(playerDAO, movementService, itemService, itemDAO, mapData);
         this.logic = logic;
         this.ui = new UI(logic);
 

@@ -19,5 +19,6 @@ CREATE TABLE game(
     player_y INTEGER,
     health INTEGER,
     attack_power INTEGER,
-    inventory TEXT
+    inventory TEXT,
+    saved_at TIMESTAMP
 );

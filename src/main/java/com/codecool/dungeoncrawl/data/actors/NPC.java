@@ -10,8 +10,6 @@ public abstract class NPC extends Actor {
 
     public abstract void moveOne(Player player);
 
-    public abstract char getSymbol();
-
     @Override
     public String getTileName() {
         return "npc";

@@ -26,6 +26,10 @@ public class MainStage {
     private final GameLogic gameLogic;
     private Player player;
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public MainStage(Canvas canvas, GameLogic gameLogic, UI ui, Player player) {
         this.canvas = canvas;
         this.gameLogic = gameLogic;
@@ -141,5 +145,9 @@ public class MainStage {
     public void setNameValueLabel(String text) { this.statusPane.setNameValue(text); }
     public StatusPane getStatusPane() {
         return statusPane;
+    }
+
+    public UI getUi() {
+        return ui;
     }
 }
