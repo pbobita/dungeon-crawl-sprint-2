@@ -8,6 +8,8 @@ CREATE table item(
                      symbol CHAR
 );
 
+DROP TABLE IF EXISTS item;
+
 SELECT name, COUNT(*)
 FROM item
 GROUP BY name
@@ -35,6 +37,3 @@ ON CONFLICT (name) DO UPDATE
         maxHealthIncrease   = EXCLUDED.maxHealthIncrease,
         equipped            = EXCLUDED.equipped,
         symbol              = EXCLUDED.symbol;
-
---Ha szeretnétek új itemet belerakni itt, akkor előbb deleteljétek a táblát és utána a kód efőlőtti részét futtassátok
--- DROP TABLE item
