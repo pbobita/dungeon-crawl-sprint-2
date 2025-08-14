@@ -26,8 +26,8 @@ public class PlayerDao {
     public void savePlayer(GameMap map) {
         Player player = map.getPlayer();
         String insertSql = """
-        INSERT INTO game (name, map, player_x, player_y, health, attack_power, inventory, saved_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO game (name, map, player_x, player_y, health, mana, attack_power, inventory, saved_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """;
 
         jdbcDao.executeUpdate(insertSql, stmt -> {
@@ -36,9 +36,10 @@ public class PlayerDao {
             stmt.setInt(3, player.getX());
             stmt.setInt(4, player.getY());
             stmt.setInt(5, player.getHealth());
-            stmt.setInt(6, player.getAttackPower());
-            stmt.setString(7, player.getInventory().toSaveString());
-            stmt.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(6, player.getCurrentMana());
+            stmt.setInt(7, player.getAttackPower());
+            stmt.setString(8, player.getInventory().toSaveString());
+            stmt.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
         });
     }
 
@@ -78,13 +79,15 @@ public class PlayerDao {
         int x = rs.getInt("player_x");
         int y = rs.getInt("player_y");
         int health = rs.getInt("health");
+        int mana = rs.getInt("mana");
         int attackPower = rs.getInt("attack_power");
         String inventoryData = rs.getString("inventory");
         String name = rs.getString("name");
 
-        Player player = new Player(map.getCell(x, y), 5, 5);
+        Player player = new Player(map.getCell(x, y));
 
         player.setHealth(health);
+        player.setMana(mana);
         player.setAttackPower(attackPower);
         player.getInventory().fromSaveString(inventoryData, itemFactory);
         player.setName(name);

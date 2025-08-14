@@ -35,4 +35,15 @@ public class Inventory {
             factory.createItemByName(name.trim()).ifPresent(this::add);
         }
     }
+
+    public Item getItem(String itemName) {
+        return items.stream()
+                .filter(i -> i.getTileName().equalsIgnoreCase(itemName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
+    }
 }

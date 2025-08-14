@@ -2,9 +2,9 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
-import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.MapLoadable;
 import com.codecool.dungeoncrawl.data.skills.SpecialAbility;
-import com.codecool.dungeoncrawl.logic.MapLoadable;
+
 
 public abstract class Actor implements Drawable, MapLoadable {
     private Cell cell;

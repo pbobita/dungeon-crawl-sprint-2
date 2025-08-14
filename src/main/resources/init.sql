@@ -18,6 +18,7 @@ CREATE TABLE game(
     player_x INTEGER,
     player_y INTEGER,
     health INTEGER,
+    mana INTEGER,
     attack_power INTEGER,
     inventory TEXT,
     saved_at TIMESTAMP

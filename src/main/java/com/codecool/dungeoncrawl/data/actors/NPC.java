@@ -9,6 +9,7 @@ public abstract class NPC extends Actor {
     }
 
     public abstract void moveOne(Player player);
+    public abstract void interact(Player player);
 
     @Override
     public String getTileName() {

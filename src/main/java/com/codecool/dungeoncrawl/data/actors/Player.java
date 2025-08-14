@@ -9,11 +9,12 @@ public class Player extends Actor {
     private int currentMana;
     private int maxMana;
 
-    public Player(Cell cell, int currentMana, int maxMana) {
+    public Player(Cell cell) {
         super(cell, 10, 5, 10, new PyroBlast());
         this.inventory = new Inventory();
-        this.currentMana = currentMana;
-        this.maxMana = maxMana;
+        this.maxMana = 5;
+        this.currentMana = maxMana;
+
     }
 
     public String getTileName() {
@@ -41,7 +42,6 @@ public class Player extends Actor {
         return '@';
     }
 
-    @Override
     public void placeOn(Cell cell, GameMap map, boolean skipPlayerSpawn) {
         cell.setType(CellType.FLOOR);
         if (!skipPlayerSpawn) {
@@ -55,6 +55,10 @@ public class Player extends Actor {
 
     public int getCurrentMana() {
         return currentMana;
+    }
+
+    public void setMana( int mana) {
+        this.currentMana = mana;
     }
 
     public void setCurrentMana(int currentMana) {
