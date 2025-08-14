@@ -1,10 +1,11 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.skills.Knockback;
 
 public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
-        super(cell, 10, 2, 10);
+        super(cell, 11, 2, 11, new Knockback());
     }
 
     @Override

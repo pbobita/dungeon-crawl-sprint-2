@@ -75,6 +75,8 @@ public class UI {
         mainStage.setMaxHealthLabelText(logic.getPlayerMaxHealth());
         mainStage.setAttackPowerLabelText(logic.getPlayerDamage());
         mainStage.setInventoryLabelText(Collections.singletonList(logic.getPlayerInventory()));
+        mainStage.setManaValue(logic.getPlayerMana());
+        mainStage.setMaxManaValue(logic.getPlayerMaxMana());
     }
 
     public void loadPlayerAndRefresh() {

@@ -74,7 +74,7 @@ public class MapLoader {
                             break;
                         case PLAYER:
                             if (!skipPlayerSpawn) {
-                                map.setPlayer(new Player(cell));
+                                map.setPlayer(new Player(cell, 5, 5));
                             }
                             break;
                         case CRAB:
