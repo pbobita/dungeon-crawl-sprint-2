@@ -11,9 +11,9 @@ public class Queen extends NPC{
 
     public void interact(Player player) {
         if(checkGemStatus(player)) {
-            int current = player.getHealth();
-            int max = player.getMaxHealth();
-            player.setHealth(Math.min(current + 2, max));
+            int current = player.getCurrentMana();
+            int max = player.getMaxMana();
+            player.setMana(Math.min(current + 5, max));
             Item gem = player.getInventory().getItem("gem");
             player.getInventory().removeItem(gem);
         }

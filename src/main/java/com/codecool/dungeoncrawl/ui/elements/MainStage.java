@@ -155,23 +155,41 @@ public class MainStage {
     public Scene getScene() {
         return scene;
     }
+
     public void setHealthLabelText(String text) {
         this.statusPane.setHealthValue(text);
     }
-    public void setAttackPowerLabelText(String text) { this.statusPane.setAttackPowerValue(text); }
-    public void setInventoryLabelText(List<String> list) { this.statusPane.setInventoryItems(list); }
-    public void setMaxHealthLabelText(String text) { this.statusPane.setMaxHealthValue(text); }
-    public void setNameValueLabel(String text) { this.statusPane.setNameValue(text); }
+
+    public void setAttackPowerLabelText(String text) {
+        this.statusPane.setAttackPowerValue(text);
+    }
+
+    public void setInventoryLabelText(List<String> list) {
+        this.statusPane.setInventoryItems(list);
+    }
+
+    public void setMaxHealthLabelText(String text) {
+        this.statusPane.setMaxHealthValue(text);
+    }
+
+    public void setNameValueLabel(String text) {
+        this.statusPane.setNameValue(text);
+    }
+
     public StatusPane getStatusPane() {
         return statusPane;
     }
+
     public void setManaValue(String text) {
         this.statusPane.setManaValueLabel(text);
     }
+
     public void setMaxManaValue(String text) {
         this.statusPane.setManaMaxValueLabel(text);
 
-    public UI getUi() {
-        return ui;
     }
+        public UI getUi () {
+            return ui;
+        }
+
 }
