@@ -74,6 +74,16 @@ public class MainStage {
         handleExit();
     }
 
+    public void handleVictoryScreen() {
+        menuScreen = new MenuScreen("Congratulations! You Won!");
+        StackPane.setAlignment(menuScreen, Pos.CENTER);
+        root.getChildren().add(menuScreen);
+
+        handleRestartGame();
+        handleLoadGame();
+        handleExit();
+    }
+
     public void handleRestartGame() {
         gameLogic.startNewGame();
         player = gameLogic.getMap().getPlayer();

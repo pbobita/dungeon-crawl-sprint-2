@@ -97,8 +97,10 @@ public class GameLogic {
     public void handleCombat(Actor attacker, Actor defender) {
         defender.gainDamage(attacker.getAttackPower());
         if (defender.isDead()) {
+            handleVictory();
             defender.getCell().setActor(null);
             handleGameEnding();
+
             return;
         }
 
@@ -109,8 +111,10 @@ public class GameLogic {
         attacker.gainDamage(defender.getAttackPower());
 
         if (attacker.isDead()) {
+            handleVictory();
             attacker.getCell().setActor(null);
             handleGameEnding();
+
             return;
         }
 
@@ -124,6 +128,15 @@ public class GameLogic {
             mainStage.handleGameOverScreen();
         }
     }
+
+    public void handleVictory() {
+        for (Monster monster : map.getMonsters()) {
+            if(monster instanceof Boss boss && boss.isDead()) {
+                mainStage.handleVictoryScreen();
+            }
+        }
+    }
+
 
     public void reloadPlayer() {
         playerDAO.loadLatestPlayerByName(map.getPlayer().getName()).ifPresent(loadedMap -> {
@@ -156,7 +169,7 @@ public class GameLogic {
         Set<KeyHandler> keyHandlers = Set.of(
                 new Up(statusPane), new Down(statusPane),
                 new Left(statusPane), new Right(statusPane),
-                new ESC(), new Unstuck()
+                new ESC(), new Unstuck(), new Space()
         );
         mainStage.getUi().setKeyHandlers(keyHandlers);
     }
