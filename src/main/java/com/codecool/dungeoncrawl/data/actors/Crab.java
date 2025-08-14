@@ -30,13 +30,12 @@ public class Crab extends Monster {
     }
 
     @Override
-    public char getSymbol() {
-        return 'b';
-    }
-
-    @Override
     public String getTileName() {
         return "crab";
     }
 
+    @Override
+    public char getSymbol() {
+        return 'b';
+    }
 }

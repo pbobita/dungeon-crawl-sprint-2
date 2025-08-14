@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data.items;
 
 import com.codecool.dungeoncrawl.dao.ItemDao;
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class Potion extends Item {
@@ -23,5 +24,10 @@ public class Potion extends Item {
 
         player.setHealth(Math.min(current + healValue, max));
         cell.setItem(null);
+    }
+
+    @Override
+    public CellType getCellType() {
+        return CellType.POTION;
     }
 }

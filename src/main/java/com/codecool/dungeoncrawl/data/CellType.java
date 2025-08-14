@@ -22,9 +22,11 @@ public enum CellType {
     LOAD_TILE("loadTile", '*'),
     CHAIN_MAIL("chainMail", 'a'),
     CRAB("crab", 'b'),
-    CAT("cat", '^');
+    CAT("cat", '^'),
+    QUEEN("queen", 'q');
 
     private final String tileName;
+
     private final char symbol;
 
     CellType(String tileName, char symbol) {
@@ -34,6 +36,10 @@ public enum CellType {
 
     public String getTileName() {
         return tileName;
+    }
+
+    public char getSymbol() {
+        return symbol;
     }
 
     public static Optional<CellType> getBySymbol(char symbol){

@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.skills.SpecialAbility;
@@ -22,17 +21,6 @@ public abstract class Actor implements Drawable, MapLoadable {
         this.attackPower = attackPower;
         this.cell.setActor(this);
         this.ability = ability;
-    }
-
-    @Override
-    public boolean matches(char symbol) {
-        return symbol == getSymbol();
-    }
-
-    @Override
-    public void placeOn(Cell cell, GameMap map, boolean skipPlayerSpawn) {
-        cell.setType(CellType.FLOOR);
-        cell.setActor(this);
     }
 
     public int getHealth() {

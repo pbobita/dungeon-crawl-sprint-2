@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class MovementService {
     public void movePlayer(Player player, int dx, int dy) {
-        Cell nextCell = player.getCell().getNeighbor(dx, dy);
 
+        Cell nextCell = player.getCell().getNeighbor(dx, dy);
         if (nextCell == null || nextCell.getActor() != null) {
             return;
         }

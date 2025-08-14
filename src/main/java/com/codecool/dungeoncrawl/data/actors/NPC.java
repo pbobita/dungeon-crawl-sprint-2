@@ -8,13 +8,11 @@ public abstract class NPC extends Actor {
         super(cell, health, attackPower, maxHealth, null);
     }
 
-    public abstract char getSymbol();
+    public abstract void moveOne(Player player);
 
     @Override
     public String getTileName() {
         return "npc";
     }
 
-    public void moveOne() {
-    }
 }

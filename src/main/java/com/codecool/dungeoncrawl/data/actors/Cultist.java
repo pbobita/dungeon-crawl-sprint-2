@@ -8,15 +8,14 @@ public class Cultist extends Monster {
         super(cell, 11, 1, 11, new Teleport());
     }
 
+    @Override
+    public String getTileName() {
+        return "cultist";
+    }
 
     @Override
     public char getSymbol() {
         return 'c';
-    }
-
-    @Override
-    public String getTileName() {
-        return "cultist";
     }
 
 }

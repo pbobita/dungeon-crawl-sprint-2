@@ -5,27 +5,30 @@ import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
-import com.codecool.dungeoncrawl.data.actors.Actor;
-import com.codecool.dungeoncrawl.data.actors.Monster;
-import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.actors.*;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
 import javafx.scene.control.Button;
 
+import java.util.List;
+import java.util.Optional;
+
 public class GameLogic {
     private GameMap map;
+    private String mapData;
     private final PlayerDao playerDAO;
     private final MovementService movementService;
     private final ItemService itemService;
     private final ItemDao itemDAO;
     private MainStage mainStage;
 
-    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO) {
+    public GameLogic(PlayerDao playerDAO, MovementService movementService, ItemService itemService, ItemDao itemDAO, String mapData) {
         this.movementService = movementService;
         this.itemService = itemService;
         this.itemDAO = itemDAO;
-        this.map = MapLoader.loadMap(false);
+        this.mapData = mapData;
+        this.map = MapLoader.loadMap(mapData,false);
         this.playerDAO = playerDAO;
     }
 
@@ -113,15 +116,29 @@ public class GameLogic {
     }
 
     public void reloadPlayer() {
-        playerDAO.loadPlayer().ifPresent(loadedMap -> this.map = loadedMap);
+        playerDAO.loadLatestPlayerByName(map.getPlayer().getName()).ifPresent(loadedMap -> {
+            this.map = loadedMap;
+
+            mainStage.setPlayer(map.getPlayer());
+
+            mainStage.getUi().refresh();
+        });
     }
+
 
     private void interactWithTile(Cell cell) {
         if (cell.getItem() != null) {
             cell.getItem().onPickUp(map.getPlayer(), cell);
         } else if (cell.getType() == CellType.SAVE_TILE) {
-            playerDAO.savePlayer(map.getPlayer());
+            playerDAO.savePlayer(map);
         }
+    }
+
+    public void interactWithNPC(NPC npc) {
+            if(npc instanceof Cat cat){
+                cat.setFollowing(true);
+            }
+
     }
 
     public void movePlayer(int dx, int dy) {
@@ -132,13 +149,56 @@ public class GameLogic {
             movementService.movePlayer(player, dx, dy);
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
+        } else if (targetCell.getActor() instanceof NPC) {
+            interactWithNPC((NPC) targetCell.getActor());
         }
-
         interactWithTile(player.getCell());
+
+    }
+
+    public void catMoveOutOfWay(Player player, Cat cat) {
+        Cell catCell = cat.getCell();
+        Cell playerCell = player.getCell();
+        int cx = catCell.getX();
+        int cy = catCell.getY();
+
+        Cell[] freeNeighbors = {
+                map.getCell(cx + 1, cy),
+                map.getCell(cx - 1, cy),
+                map.getCell(cx, cy + 1),
+                map.getCell(cx, cy - 1)
+        };
+
+        for (Cell c : freeNeighbors) {
+            if (c != null && c.getActor() == null && c.getType() != CellType.WALL) {
+                playerCell.setActor(null);
+                c.setActor(player);
+                player.setCell(c);
+                break;
+            }
+        }
     }
 
     public void startNewGame() {
-        this.map = MapLoader.loadMap(false);
+        String mapText = MapLoader.loadMapFile("map.txt");
+        this.map = MapLoader.loadMap(mapText, false);
     }
+
+    public List<String> getSavedPlayerNames() {
+        return playerDAO.getAllSavedPlayerNames();
+    }
+
+    public void loadPlayerByName(String name) {
+        Optional<GameMap> optionalMap = playerDAO.loadLatestPlayerByName(name);
+
+        if (optionalMap.isPresent()) {
+            GameMap loadedMap = optionalMap.get();
+            this.map = loadedMap;
+
+            Player player = loadedMap.getPlayer();
+            player.setName(name);
+        }
+    }
+
 
 }
