@@ -10,6 +10,9 @@ import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
 
+import java.util.List;
+import java.util.Optional;
+
 public class GameLogic {
     private GameMap map;
     private String mapData;
@@ -159,5 +162,22 @@ public class GameLogic {
         String mapText = MapLoader.loadMapFile("map.txt");
         this.map = MapLoader.loadMap(mapText, false);
     }
+
+    public List<String> getSavedPlayerNames() {
+        return playerDAO.getAllSavedPlayerNames();
+    }
+
+    public void loadPlayerByName(String name) {
+        Optional<GameMap> optionalMap = playerDAO.loadLatestPlayerByName(name);
+
+        if (optionalMap.isPresent()) {
+            GameMap loadedMap = optionalMap.get();
+            this.map = loadedMap;
+
+            Player player = loadedMap.getPlayer();
+            player.setName(name);
+        }
+    }
+
 
 }

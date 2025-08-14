@@ -66,7 +66,7 @@ public class PlayerDao {
 
     public List<String> getAllSavedPlayerNames() {
         List<String> names = new ArrayList<>();
-        jdbcDao.executeQuery("SELECT name FROM game", stmt -> {}, rs -> {
+        jdbcDao.executeQuery("SELECT DISTINCT name FROM game", stmt -> {}, rs -> {
             while (rs.next()) {
                 names.add(rs.getString("name"));
             }
