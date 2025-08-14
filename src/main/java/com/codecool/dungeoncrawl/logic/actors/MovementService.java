@@ -3,14 +3,17 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.Monster;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 import java.util.Set;
 
 public class MovementService {
     public void movePlayer(Player player, int dx, int dy) {
-        Cell nextCell = player.getCell().getNeighbor(dx, dy);
 
+        Cell nextCell = player.getCell().getNeighbor(dx, dy);
+        System.out.println("Actor on target cell: " + nextCell.getActor());
+        System.out.println("Is monster: " + (nextCell.getActor() instanceof Monster));
         if (nextCell == null || nextCell.getActor() != null) {
             return;
         }
@@ -22,6 +25,7 @@ public class MovementService {
         player.getCell().setActor(null);
         nextCell.setActor(player);
         player.setCell(nextCell);
+        System.out.println("Player stepped on: " + player.getCell().getType());
     }
 
     public boolean canMoveTo(Player player, String tile, Actor actor) {
