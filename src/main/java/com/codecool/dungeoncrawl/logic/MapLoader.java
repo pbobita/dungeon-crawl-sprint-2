@@ -68,6 +68,7 @@ public class MapLoader {
                             }
                         }
                         case CRAB -> new Crab(cell);
+                        case CAT -> new Cat(cell);
                         default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }

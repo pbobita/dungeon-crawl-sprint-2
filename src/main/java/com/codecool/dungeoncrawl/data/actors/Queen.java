@@ -13,12 +13,12 @@ public class Queen extends NPC{
     }
 
     @Override
-    public char getSymbol() {
-        return 'q';
+    public String getTileName() {
+        return "queen";
     }
 
     @Override
-    public String getTileName() {
-        return "queen";
+    public char getSymbol() {
+        return 'q';
     }
 }

@@ -40,7 +40,6 @@ public class PlayerDao {
             stmt.setString(7, player.getInventory().toSaveString());
             stmt.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
         });
-        System.out.println(MapSerializer.serializeMap(map));
     }
 
     public Optional<GameMap> loadLatestPlayerByName(String playerName) {

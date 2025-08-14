@@ -7,8 +7,6 @@ public abstract class Monster extends Actor {
         super(cell, health, attackPower, maxHealth);
     }
 
-    public abstract char getSymbol();
-
     @Override
     public String getTileName() {
         return "monster";

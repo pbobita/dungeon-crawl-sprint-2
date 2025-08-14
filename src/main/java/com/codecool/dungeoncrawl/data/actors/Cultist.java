@@ -7,14 +7,13 @@ public class Cultist extends Monster {
         super(cell, 6, 1, 6);
     }
 
+    @Override
+    public String getTileName() {
+        return "cultist";
+    }
 
     @Override
     public char getSymbol() {
         return 'c';
-    }
-
-    @Override
-    public String getTileName() {
-        return "cultist";
     }
 }

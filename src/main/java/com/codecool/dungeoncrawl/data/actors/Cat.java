@@ -25,15 +25,42 @@ public class Cat extends NPC{
 
     public Cell checkFollowedPosition(Player player) {
         Cell playerCell = player.getCell();
+
+        if (Math.abs(playerCell.getX() - getCell().getX()) <= 1 &&
+                Math.abs(playerCell.getY() - getCell().getY()) <= 1) {
+            return getCell();
+        }
+
         int dx = Integer.compare(playerCell.getX(), getCell().getX());
         int dy = Integer.compare(playerCell.getY(), getCell().getY());
 
         Cell nextCell = getCell().getNeighbor(dx, dy);
-
-        if (nextCell == null || nextCell.getActor() != null || nextCell.getType() == CellType.WALL) {
-            return getCell();
+        if (isWalkable(nextCell)) {
+            return nextCell;
         }
-        return nextCell;
+
+        if (dx != 0) {
+            nextCell = getCell().getNeighbor(dx, 0);
+            if (isWalkable(nextCell)) {
+                return nextCell;
+            }
+        }
+
+        if (dy != 0) {
+            nextCell = getCell().getNeighbor(0, dy);
+            if (isWalkable(nextCell)) {
+                return nextCell;
+            }
+        }
+
+        return getCell();
+    }
+
+    private boolean isWalkable(Cell cell) {
+        return cell != null &&
+                cell.getActor() == null &&
+                cell.getType() != CellType.WALL
+                && cell.getType() != CellType.EMPTY;
     }
 
 
