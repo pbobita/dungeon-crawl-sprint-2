@@ -8,6 +8,8 @@ public abstract class NPC extends Actor {
         super(cell, health, attackPower, maxHealth);
     }
 
+    public abstract void moveOne(Player player);
+
     public abstract char getSymbol();
 
     @Override
@@ -15,6 +17,4 @@ public abstract class NPC extends Actor {
         return "npc";
     }
 
-    public void moveOne() {
-    }
 }

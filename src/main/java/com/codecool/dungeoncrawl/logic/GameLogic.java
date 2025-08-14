@@ -5,9 +5,7 @@ import com.codecool.dungeoncrawl.dao.PlayerDao;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
-import com.codecool.dungeoncrawl.data.actors.Actor;
-import com.codecool.dungeoncrawl.data.actors.Monster;
-import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.actors.*;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.logic.actors.ItemService;
 import com.codecool.dungeoncrawl.logic.actors.MovementService;
@@ -112,6 +110,13 @@ public class GameLogic {
         }
     }
 
+    public void interactWithNPC(NPC npc) {
+            if(npc instanceof Cat cat){
+                cat.setFollowing(true);
+            }
+
+    }
+
     public void movePlayer(int dx, int dy) {
         Player player = map.getPlayer();
         Cell targetCell = map.getCell(player.getX() + dx, player.getY() + dy);
@@ -120,9 +125,34 @@ public class GameLogic {
             movementService.movePlayer(player, dx, dy);
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
+        } else if (targetCell.getActor() instanceof NPC) {
+            interactWithNPC((NPC) targetCell.getActor());
         }
-
         interactWithTile(player.getCell());
+
+    }
+
+    public void catMoveOutOfWay(Player player, Cat cat) {
+        Cell catCell = cat.getCell();
+        Cell playerCell = player.getCell();
+        int cx = catCell.getX();
+        int cy = catCell.getY();
+
+        Cell[] freeNeighbors = {
+                map.getCell(cx + 1, cy),
+                map.getCell(cx - 1, cy),
+                map.getCell(cx, cy + 1),
+                map.getCell(cx, cy - 1)
+        };
+
+        for (Cell c : freeNeighbors) {
+            if (c != null && c.getActor() == null && c.getType() != CellType.WALL) {
+                playerCell.setActor(null);
+                c.setActor(player);
+                player.setCell(c);
+                break;
+            }
+        }
     }
 
     public void startNewGame() {
