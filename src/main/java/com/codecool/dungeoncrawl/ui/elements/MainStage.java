@@ -25,6 +25,7 @@ public class MainStage {
     private final UI ui;
     private final GameLogic gameLogic;
     private Player player;
+    private LoadByNameScreen nameScreen;
 
     public void setPlayer(Player player) {
         this.player = player;
@@ -102,7 +103,8 @@ public class MainStage {
     public void handleLoadGame() {
         menuScreen.getLoadGameButton().setOnAction(event -> {
             root.getChildren().remove(menuScreen);
-            ui.loadPlayerAndRefresh();
+            List<String> savedNames = gameLogic.getSavedPlayerNames();
+            showLoadByNameScreen(savedNames);
         });
     }
 
@@ -131,6 +133,23 @@ public class MainStage {
             inputHandler.getInput().clear();
             gameLogic.getMap().getPlayer().setName(name);
         }
+    }
+
+    public void showLoadByNameScreen(List<String> savedNames) {
+        nameScreen = new LoadByNameScreen(savedNames, selectedName -> {
+            root.getChildren().remove(nameScreen);
+            gameLogic.loadPlayerByName(selectedName);
+            player = gameLogic.getMap().getPlayer();
+
+            statusPane.setNameValue(player.getName());
+            statusPane.setHealthValue(String.valueOf(player.getHealth()));
+            statusPane.setAttackPowerValue(String.valueOf(player.getAttackPower()));
+            statusPane.setMaxHealthValue(String.valueOf(player.getMaxHealth()));
+            ui.refresh();
+        });
+
+        StackPane.setAlignment(nameScreen, Pos.CENTER);
+        root.getChildren().add(nameScreen);
     }
 
     public Scene getScene() {
