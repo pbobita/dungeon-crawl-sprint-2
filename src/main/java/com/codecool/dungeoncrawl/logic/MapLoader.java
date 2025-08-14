@@ -68,6 +68,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
                             break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            new Boss(cell);
+                            break;
                         case 'g':
                             cell.setType(CellType.FLOOR);
                             new Gnome(cell);

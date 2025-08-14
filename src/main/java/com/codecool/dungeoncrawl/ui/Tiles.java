@@ -40,7 +40,7 @@ public class Tiles {
         tileMap.put("saveTile", new Tile(0,10));
         tileMap.put("loadTile", new Tile(24, 24));
         tileMap.put("chainMail", new Tile(1, 23));
-
+        tileMap.put("boss", new Tile(30, 2));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

@@ -13,7 +13,8 @@ public enum CellType {
     SAVE_TILE("saveTile"),
     LOAD_TILE("loadTile"),
     MONSTER("monster"),
-    CHAIN_MAIL("chainMail"),;
+    CHAIN_MAIL("chainMail"),
+    BOSS("boss"),;
 
     private final String tileName;
 

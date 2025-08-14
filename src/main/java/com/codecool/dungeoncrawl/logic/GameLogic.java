@@ -50,6 +50,7 @@ public class GameLogic {
     public String getPlayerInventory() {return map.getPlayer().getInventory();}
 
 
+
     public GameMap getMap() {
         return map;
     }
