@@ -23,7 +23,9 @@ public enum CellType {
     CHAIN_MAIL("chainMail", 'a'),
     CRAB("crab", 'b'),
     CAT("cat", '^'),
-    QUEEN("queen", 'q');
+    QUEEN("queen", 'q'),
+    GEM("gem", '8');
+
 
     private final String tileName;
 

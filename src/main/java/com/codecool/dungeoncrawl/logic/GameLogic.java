@@ -110,11 +110,8 @@ public class GameLogic {
         }
     }
 
-    public void interactWithNPC(NPC npc) {
-            if(npc instanceof Cat cat){
-                cat.setFollowing(true);
-            }
-
+    public void interactWithNPC(NPC npc, Player player) {
+          npc.interact(player);
     }
 
     public void movePlayer(int dx, int dy) {
@@ -126,7 +123,7 @@ public class GameLogic {
         } else if (targetCell.getActor() instanceof Monster) {
             handleCombat(player, targetCell.getActor());
         } else if (targetCell.getActor() instanceof NPC) {
-            interactWithNPC((NPC) targetCell.getActor());
+            interactWithNPC((NPC) targetCell.getActor(), player);
         }
         interactWithTile(player.getCell());
 

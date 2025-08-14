@@ -43,9 +43,7 @@ public class MainStage {
         BorderPane borderPane = statusPane.build();
         borderPane.setCenter(canvas);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         double width = screenSize.getWidth();
-
         double height = screenSize.getHeight();
 
         root = new StackPane(borderPane);

@@ -3,10 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
-import com.codecool.dungeoncrawl.data.items.ChainMail;
-import com.codecool.dungeoncrawl.data.items.Key;
-import com.codecool.dungeoncrawl.data.items.Potion;
-import com.codecool.dungeoncrawl.data.items.Sword;
+import com.codecool.dungeoncrawl.data.items.*;
 import com.codecool.dungeoncrawl.data.actors.*;
 
 import java.io.InputStream;
@@ -69,6 +66,8 @@ public class MapLoader {
                         }
                         case CRAB -> new Crab(cell);
                         case CAT -> new Cat(cell);
+                        case GEM -> new Gem(cell, '8');
+                        case QUEEN ->  new Queen(cell);
                         default -> throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
                     }
                 }
